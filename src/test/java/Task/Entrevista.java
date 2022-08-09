@@ -1,13 +1,9 @@
 package Task;
 
-import Action.Choose;
-import Action.Click;
-import Action.Get;
-import Action.Write;
+import Action.*;
 import Page.DetalleDireccionPage;
 import Page.EntrevistaPage;
 import Tools.Frame;
-import Action.Grid;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -314,6 +310,14 @@ public class Entrevista {
         EntrevistaPage entrevistaPage = new EntrevistaPage ( driver );
         Click click = new Click ( driver );
         click.On ( entrevistaPage.BTNOPCONFIRMAR );
+        Thread.sleep ( 3000 );
+    }
+
+    public void Refinanciar() throws InterruptedException {
+        Thread.sleep ( 3000 );
+        EntrevistaPage entrevistaPage = new EntrevistaPage ( driver );
+        CheckBox checkBox = new CheckBox ( driver );
+        checkBox.Check ( entrevistaPage.checkRefinanciacion );
         Thread.sleep ( 3000 );
     }
 

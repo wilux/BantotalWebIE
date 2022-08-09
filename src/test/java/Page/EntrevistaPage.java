@@ -79,6 +79,8 @@ public class EntrevistaPage {
     public By TipoPersona = By.id ( "_PETIPO" );
     //Titulos
     public By Titulo = By.id ( "HTMLTXTTITLE1" );
+    //Refinanciacion
+    public By checkRefinanciacion = By.name ( "_REFINANCIAR_SN" );
     WebDriver driver;
 
     public EntrevistaPage(WebDriver driver) {
