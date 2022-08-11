@@ -42,7 +42,7 @@ public class Click {
             }
         }
         if ( !estado ) {
-            // Assert.fail ( "No se encontró " + locator + " y no se puede continuar prueba." );
+            Assert.fail ( "No se encontró " + locator + " y no se puede continuar prueba." );
             System.out.println ( "No se encontró " + locator + " y no se puede continuar prueba." );
         }
     }

@@ -84,17 +84,19 @@ public class BandejaTareas extends BandejaTareasPage {
 
     //Avanzar (decide que accion tomar)
     public void avanzarEntrevista(String nroEntrevista) throws InterruptedException {
+        Thread.sleep ( 200 );
         By img = By.id ( "_ZG1_IMGESTADOIMAGE_0001" );
-
         Click click = new Click ( driver );
         Grid grid = new Grid ( driver );
         Acciones acciones = new Acciones ( driver );
         //Buscar entrevista
         filtrar ( nroEntrevista );
+        Thread.sleep ( 200 );
         grid.rowSelectbyFila ( Grilla_Tareas, PrimerTarea );
-
+        Thread.sleep ( 200 );
         if ( acciones.get ().ValueOnInput ( img ).contains ( "icono_mail_inprocess.gif" ) ) {
             click.On ( BTNOPOSIGUIENTE );
+            Thread.sleep ( 200 );
             click.On ( BTNCONFIRMATION );
             //Salto mensaje y no se puede Siguiente entonces Ejecutar
             if ( acciones.get ().TextOnTag ( MsgTextArriba ) != "" ) {
@@ -106,6 +108,7 @@ public class BandejaTareas extends BandejaTareasPage {
             click.On ( BTNOPOEJECUTAR );
         }
         else {
+            Thread.sleep ( 200 );
             click.On ( BTNOPOTOMAR );
         }
     }
