@@ -13,31 +13,45 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.awt.*;
+import java.sql.SQLException;
 
 
 public class WF_RefinanciacionTest extends BaseTest {
 
     //Datos del caso
-    String cuil = "23298617889  ";
-    String NroEntrevista = "1362161";
+    String cuil = "27059733813";
+    String NroEntrevista = "";
     String usuarioPlataforma = "SERPILLOE";
     String usuarioRecupero = "ROJASM";
     String usuarioGerencia = "RODRIGUA";
     String usuarioCentral = "LOMBERAM";
 
 
-    //Iniciar Entrevista
-    @Test(priority = 0)
-    public void bandeja() throws InterruptedException, AWTException {
-        Log.reportLog ( "Step 1 - Abrimos Bandeja Tareas e Iniciamos Entrevista" );
-        Acciones acciones = new Acciones ( driver );
+    @BeforeTest
+    public void login() throws InterruptedException, AWTException {
+        Log.reportLog ( "Step 0 - Abrimos BT y logueamos" );
+        //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
+        Acciones acciones = new Acciones ( driver );
+
+        //Inicio Como usuario de Plataforma
+        bd.CambiarUsuario ( usuarioPlataforma );
+
 
         //Logueamos
         acciones.login ().Ingresar ( "QA" );
 
-        //Inicio Como usuario de Plataforma
-        bd.CambiarUsuario ( usuarioPlataforma );
+
+    }
+
+
+    //Iniciar Entrevista
+    @Test(priority = 0)
+    public void entrevista() throws InterruptedException, AWTException {
+        Log.reportLog ( "Step 1 - Abrimos Bandeja Tareas e Iniciamos Entrevista" );
+        Acciones acciones = new Acciones ( driver );
+        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
+
 
         //Menu Ejecutar
         acciones.menu ().Ejecutar ();
@@ -79,16 +93,16 @@ public class WF_RefinanciacionTest extends BaseTest {
 
     }
 
-    //retomar
+
     //Iniciar Refinanciacion
-    @Test(priority = 1, dependsOnMethods = "bandeja")
+    @Test(priority = 1, dependsOnMethods = "entrevista")
     public void refinanciacion() throws InterruptedException {
         Log.reportLog ( "Step 2 - Seleccionamos productos a Refinanciar" );
         Acciones acciones = new Acciones ( driver );
         RefinanciacionSeleccionProductos refinanciacionSeleccionProductos =
                 new RefinanciacionSeleccionProductos ( driver );
         //Abrir/Retomar Entrevista Nueva
-        acciones.bandejaTareas ().avanzarEntrevista ( NroEntrevista );
+        acciones.bandejaTareas ().ejecutarEntrevista ( NroEntrevista );
 
         //Seleccionar Productos
         refinanciacionSeleccionProductos.seleccionarTodaslasCuentas ();
@@ -105,8 +119,9 @@ public class WF_RefinanciacionTest extends BaseTest {
 
     //Datos Generales Amortizable
     @Test(priority = 2, dependsOnMethods = "refinanciacion")
-    public void datosAmortizables() throws InterruptedException, AWTException {
+    public void datosAmortizables() throws InterruptedException, AWTException, SQLException {
         Log.reportLog ( "Step 3 - Datos Generales Amortizable" );
+        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         RefinanciacionDatosGenerales refinanciacionDatosGenerales = new RefinanciacionDatosGenerales ( driver );
         refinanciacionDatosGenerales.cantidadCuotas ( "48" );
         refinanciacionDatosGenerales.confirmar ();
@@ -115,21 +130,21 @@ public class WF_RefinanciacionTest extends BaseTest {
         refinanciacionDatosGenerales.confirmarSeguro ();
         //Plan de Pagos
         refinanciacionDatosGenerales.confirmarPlanPago ();
-
-        //Termina y pasa a usuario de Recupero
+        Thread.sleep ( 5000 );
+        Assert.assertTrue ( bd.estadoEntrevistaWf ( "Aprobar propuesta", NroEntrevista ) );
     }
 
     //Retomar desde Recupero
     //Aprobar Propuesta
     @Test(priority = 3, dependsOnMethods = "datosAmortizables")
-    public void retomaRecuperoAprobarPropuesta() throws InterruptedException, AWTException {
-        Thread.sleep ( 5000 );
+    public void retomaRecuperoAprobarPropuesta() throws InterruptedException, AWTException, SQLException {
         Log.reportLog ( "Step 4 - Recupero: Aprobar Propuesta" );
         //Reiniciamos con nuevo usuario
         Restart restart = new Restart ( driver );
         driver = restart.As ( usuarioRecupero );
         Acciones acciones = new Acciones ( driver );
         RefinanciacionAprobarPropuesta refinanciacionAprobarPropuesta = new RefinanciacionAprobarPropuesta ( driver );
+        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         //Abrir bandeja
         //Menu Ejecutar
         acciones.menu ().Ejecutar ();
@@ -137,11 +152,13 @@ public class WF_RefinanciacionTest extends BaseTest {
         acciones.ejecutar ().Programa ( "hxwf900" );
 
         //Abrir Entrevista Nueva
-        acciones.bandejaTareas ().avanzarEntrevista ( NroEntrevista );
-
+        acciones.bandejaTareas ().tomarEntrevista ( NroEntrevista );
+        acciones.bandejaTareas ().ejecutarEntrevista ( NroEntrevista );
+        Thread.sleep ( 2000 );
         //Aprobar tramite
         refinanciacionAprobarPropuesta.aprobar ();
-        //Tramite termina y pasa a otra instancia
+        Thread.sleep ( 5000 );
+        Assert.assertTrue ( bd.estadoEntrevistaWf ( "Validar propuesta", NroEntrevista ) );
 
     }
 
@@ -149,25 +166,27 @@ public class WF_RefinanciacionTest extends BaseTest {
     //Retomar desde Gerente
     //Valida Propuesta
     @Test(priority = 4, dependsOnMethods = "retomaRecuperoAprobarPropuesta")
-    public void retomaGerente() throws InterruptedException, AWTException {
-        Thread.sleep ( 5000 );
+    public void retomaGerente() throws InterruptedException, AWTException, SQLException {
         Log.reportLog ( "Step 5 - Gerente: Valida Propuesta" );
         //Reiniciamos con nuevo usuario
         Restart restart = new Restart ( driver );
         driver = restart.As ( usuarioGerencia );
         Acciones acciones = new Acciones ( driver );
         RefinanciacionValidarPropuesta refinanciacionValidarPropuesta = new RefinanciacionValidarPropuesta ( driver );
+        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         //Abrir bandeja
         //Menu Ejecutar
         acciones.menu ().Ejecutar ();
         //Abrir BandejaTareas
         acciones.ejecutar ().Programa ( "hxwf900" );
         //Abrir Entrevista Nueva
-        acciones.bandejaTareas ().avanzarEntrevista ( NroEntrevista );
+        acciones.bandejaTareas ().tomarEntrevista ( NroEntrevista );
+        acciones.bandejaTareas ().ejecutarEntrevista ( NroEntrevista );
 
         //Confirmar tramite
         refinanciacionValidarPropuesta.confirmar ();
-        //Tramite termina y pasa a otra instancia
+        Thread.sleep ( 5000 );
+        Assert.assertTrue ( bd.estadoEntrevistaWf ( "Controlar documentacion", NroEntrevista ) );
 
 
     }
@@ -176,26 +195,29 @@ public class WF_RefinanciacionTest extends BaseTest {
     //Retomar desde Centralizadora
     //Valida Propuesta
     @Test(priority = 5, dependsOnMethods = "retomaGerente")
-    public void retomaCentralizadora() throws InterruptedException, AWTException {
-        Thread.sleep ( 5000 );
+    public void retomaCentralizadora() throws InterruptedException, AWTException, SQLException {
+
         Log.reportLog ( "Step 6 - Centralizadora: Valida Propuesta" );
         //Reiniciamos con nuevo usuario
         Restart restart = new Restart ( driver );
         driver = restart.As ( usuarioCentral );
         Acciones acciones = new Acciones ( driver );
         RefinanciacionControlaDoc refinanciacionControlaDoc = new RefinanciacionControlaDoc ( driver );
+        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         //Abrir bandeja
         //Menu Ejecutar
         acciones.menu ().Ejecutar ();
         //Abrir BandejaTareas
         acciones.ejecutar ().Programa ( "hxwf900" );
         //Abrir Entrevista Nueva
-        acciones.bandejaTareas ().avanzarEntrevista ( NroEntrevista );
+        acciones.bandejaTareas ().tomarEntrevista ( NroEntrevista );
+        acciones.bandejaTareas ().ejecutarEntrevista ( NroEntrevista );
 
         //Confirmar tramite
         refinanciacionControlaDoc.confirmar ();
         //Fin tramite.
-        // Se tiene que acreditar prestamo por total, despaquetizar cuenta, etc..
+        Thread.sleep ( 5000 );
+        Assert.assertTrue ( bd.estadoEntrevistaWf ( "Proceso de cancelacion", NroEntrevista ) );
 
 
     }

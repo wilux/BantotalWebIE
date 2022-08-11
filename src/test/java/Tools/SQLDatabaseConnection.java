@@ -97,6 +97,7 @@ public class SQLDatabaseConnection {
 //            e.printStackTrace ();
             System.out.println ( "No hay registros en la consulta" );
         }
+        System.out.println ( value );
         return value;
     }
 
@@ -223,6 +224,18 @@ public class SQLDatabaseConnection {
         //FirmaDigital
         String sql_updateFirma = "select *  from TRAMITE where CuitCuil = '" + cuil + "' and activo = 1";
         return (!getValue ( sql_updateFirma, db_Firma ).equals ( "" ));
+    }
+
+    public boolean estadoEntrevistaWf(String valor, String entrevista) throws SQLException {
+        String db = "BPN_WEB_QA";
+
+        //FirmaDigital
+        String sql = "select top 1 b.WFTaskName from wfwrkitems a (nolock)\n" +
+                "inner join wftask b (nolock) on a.WFTaskCod=b.WFTaskCod and b.WFPrcId in(6,9,10,13) --and b.WFTaskCod=70\n" +
+                "inner join wfattsvalues c (nolock) on a.WFInsPrcId=c.WFInsPrcId and c.WFAttSId='ENTREVISTA' and c" +
+                ".WFAttSVal in('" + entrevista + ".0000') --775731\n" +
+                "order by WFItemId desc";
+        return (getValue ( sql, db ).contains ( valor ));
     }
 
 

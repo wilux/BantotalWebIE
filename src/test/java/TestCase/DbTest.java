@@ -42,17 +42,28 @@ public class DbTest {
 //    }
 
 
+//    @Test
+//    //Tests LD
+//    public void VerificarFirmasDisponibles() throws InterruptedException, SQLException {
+//
+//        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
+//        if ( bd.esperarFormularios ( "27350672155" ) != false ) {
+//            Assert.assertTrue ( bd.esperarFormularios ( "27350672155" ) );
+//        }
+//        else {
+//            Assert.assertFalse ( bd.esperarFormularios ( "27350672155" ) );
+//        }
+//
+//    }
+
+
     @Test
     //Tests LD
-    public void VerificarFirmasDisponibles() throws InterruptedException, SQLException {
+    public void estadoEntrevistaWf() throws InterruptedException, SQLException {
 
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
-        if ( bd.esperarFormularios ( "27350672155" ) != false ) {
-            Assert.assertTrue ( bd.esperarFormularios ( "27350672155" ) );
-        }
-        else {
-            Assert.assertFalse ( bd.esperarFormularios ( "27350672155" ) );
-        }
+
+        Assert.assertTrue ( bd.estadoEntrevistaWf ( "Aprobar propuesta", "1362163" ) );
 
     }
 }
