@@ -3,6 +3,7 @@ package TestCase;
 import Config.BaseTest;
 import Config.Acciones;
 import Tools.SQLDatabaseConnection;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,6 +16,7 @@ public class SimularTest extends BaseTest {
     @Test
     //Tests google calculator
     public void Simular() throws InterruptedException, AWTException {
+
 
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();

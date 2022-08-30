@@ -60,4 +60,9 @@ public class RevisionParaConfirmar extends RevisionParaConfirmarPage {
     }
 
 
+    public void Finalizar() {
+        Click click = new Click ( driver );
+        click.On ( BTNOPFINALIZAR );
+
+    }
 }

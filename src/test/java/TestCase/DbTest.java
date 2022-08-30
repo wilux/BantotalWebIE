@@ -63,7 +63,8 @@ public class DbTest {
 
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
 
-        Assert.assertTrue ( bd.estadoEntrevistaWf ( "Aprobar propuesta", "1362163" ) );
+
+        Assert.assertTrue ( !bd.esperarFormularios ( "27350672155" ) );
 
     }
 }

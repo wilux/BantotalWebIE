@@ -40,6 +40,7 @@ public class Choose {
                 frame.BuscarFrame ( locator );
                 Select select = new Select ( driver.findElement ( locator ) );
                 select.selectByValue ( value );
+                System.out.println ( value );
 
             }
         } catch (Exception e) {

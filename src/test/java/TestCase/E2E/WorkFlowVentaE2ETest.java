@@ -22,7 +22,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
     //Datos del caso
     String cuil = "27350672155 ";
-    String NroEntrevista = "1283763";
+    String NroEntrevista = "";
     String usuarioPlataforma = "SERPILLOE";
     String usuarioGerencia = "RODRIGUA";
     String usuarioCreditos = "PIANCIOLAG";
@@ -85,7 +85,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
     }
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = true, dependsOnMethods = "Bandeja")
     public void Simulacion() throws InterruptedException {
 
         Log.reportLog ( "Step 2 - Iniciamos Simulacion" );
@@ -102,7 +102,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
         acciones.simulacion ().Paquete ( paquetes.get ( 2 ) );
 
         //Linea
-        acciones.simulacion ().Linea ( "309201" );
+        acciones.simulacion ().Linea ( "309200" );
 
         //Monto
         acciones.simulacion ().Monto ( "1000" );
@@ -126,7 +126,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = true, dependsOnMethods = "Simulacion")
     public void ConfirmarPlanDePagos() throws InterruptedException {
         Log.reportLog ( "Step 3 - Confirmar Plan de Pagos Amortizable" );
         Acciones acciones = new Acciones ( driver );
@@ -135,7 +135,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
         Assert.assertTrue ( acciones.get ().Existe ( acciones.simulacion ().BTNOPCARTASIMULADOR ) );
     }
 
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 3, enabled = true, dependsOnMethods = "ConfirmarPlanDePagos")
     public void ConfirmarSimulacion() throws InterruptedException {
         Log.reportLog ( "Step 4 - Confirmar Simulacion" );
         Acciones acciones = new Acciones ( driver );
@@ -144,7 +144,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
         Assert.assertTrue ( acciones.get ().Existe ( acciones.bandejaTareas ().BTNOPOEJECUTAR ) );
     }
 
-    @Test(priority = 4, enabled = true)
+    @Test(priority = 4, enabled = true, dependsOnMethods = "ConfirmarSimulacion")
     public void CargaAvanzada() throws InterruptedException, ParseException {
 
         Log.reportLog ( "Step 5 - Confirmar Carga Avanzada" );
@@ -167,7 +167,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
         Assert.assertTrue ( acciones.get ().Existe ( acciones.bandejaTareas ().BTNOPOEJECUTAR ) );
     }
 
-    @Test(priority = 5, enabled = true)
+    @Test(priority = 5, enabled = true, dependsOnMethods = "CargaAvanzada")
     public void Reutilizacion() throws InterruptedException {
 
         Log.reportLog ( "Step 6 - Confirmar Reutilizacion" );
@@ -187,7 +187,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
         Assert.assertTrue ( acciones.get ().Existe ( acciones.matrizRiesgo ().GRIDSUBINTEGRANTES ) );
     }
 
-    @Test(priority = 6, enabled = true)
+    @Test(priority = 6, enabled = true, dependsOnMethods = "Reutilizacion")
     public void MatrizRiesgo() throws InterruptedException, AWTException, SQLException {
 
         Log.reportLog ( "Step 7 - Confirmar Matriz Riesgo" );
@@ -204,7 +204,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
             System.out.print ( "Esperando generacion de formularios..." );
             do {
                 System.out.println ( "." );
-            } while (bd.esperarFormularios ( "27350672155" ) != true || (stopwatch.elapsed ( TimeUnit.SECONDS ) < 360));
+            } while (bd.esperarFormularios ( cuil ) || (stopwatch.elapsed ( TimeUnit.SECONDS ) < 120));
             System.out.println ( "Tiempo transcurrido: " + stopwatch.elapsed ( TimeUnit.SECONDS ) );
             System.out.print ( "Legajo creado, empezando a firmar..." );
             //Firmamos LD
@@ -326,6 +326,10 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
         acciones.planPagosAmortizables ().VinculaGarantia ();
         Log.reportLogScreen ( driver );
+
+        //Finalizar
+        Log.reportLogScreen ( driver );
+        acciones.revisionParaConfirmar ().Finalizar ();
 
         Assert.assertTrue ( true );
     }

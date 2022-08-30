@@ -26,10 +26,11 @@ public class Simulacion extends SimulacionProductosPage {
     }
 
     //    value "309203"+003 -> 309/203
-    public void Linea(String ejemplo_309203) {
-
+    public void Linea(String ejemplo_309203) throws InterruptedException {
+        Thread.sleep ( 3000 );
         Choose choose = new Choose ( driver );
         choose.byValue ( SelectLineaPrestamo, ejemplo_309203 + "003" );
+        Thread.sleep ( 1000 );
 
     }
 
@@ -111,7 +112,7 @@ public class Simulacion extends SimulacionProductosPage {
         click.On ( BTNOPSIMULAR );
         click.On ( BTNOPCONFIRMAR );
         Thread.sleep ( 4000 );
-        click.On ( BTN_SI );
+//        click.On ( BTN_SI );
 
 
     }
