@@ -4,6 +4,7 @@ package Config;
 import Tools.logs.Log;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 
@@ -28,14 +29,14 @@ public abstract class BaseTest {
     }
 
 
-//    @AfterSuite
-//    public void after() {
-//        Log.info ( "Tests are ending!" );
-//        if ( driver != null ) {
-//            driver.quit ();
-//        }
-//
-//    }
+    @AfterSuite
+    public void after() {
+        Log.info ( "Tests are ending!" );
+        if ( driver != null ) {
+            driver.quit ();
+        }
+
+    }
 
 
 }
