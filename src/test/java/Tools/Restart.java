@@ -2,7 +2,6 @@ package Tools;
 
 import Config.Acciones;
 import Config.BaseTest;
-import Tools.logs.Log;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
@@ -44,7 +43,6 @@ public class Restart extends BaseTest {
     }
 
     public void restartDriver() {
-        Log.info ( "Restarting!" );
         driver.manage ().deleteAllCookies ();
         driver.quit ();
         driver = null;

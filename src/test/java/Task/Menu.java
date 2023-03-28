@@ -1,6 +1,5 @@
 package Task;
 
-import Config.BaseTest;
 import Page.MenuPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;

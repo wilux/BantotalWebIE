@@ -2,7 +2,11 @@ package Task;
 
 import Config.Credenciales;
 import Page.LoginPage;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.testng.Assert;
 
 import javax.swing.*;
@@ -10,6 +14,7 @@ import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 
 public class Login {
@@ -39,6 +44,7 @@ public class Login {
 
     }
 
+
     public void cambiarVentana() {
 //        LoginPage loginPage = new LoginPage ( driver );
 //        driver.findElement ( loginPage.LoginButton ).click ();
@@ -65,6 +71,35 @@ public class Login {
     }
 
 
+    public void cambiarUsuario(String strUserName) throws InterruptedException, AWTException {
+        // Setup Edge driver via WebDriverManager
+        WebDriverManager.edgedriver ().setup ();
+
+        // Create a new instance of Edge driver
+        WebDriver driver = new EdgeDriver ();
+
+        // Create a new instance of EdgeOptions
+        EdgeOptions options = new EdgeOptions ();
+        options.addArguments ( "--headless" );
+
+//        // Create a new instance of Edge driver with options
+//        WebDriver driver = new EdgeDriver(options);
+
+        driver.manage ().timeouts ().implicitlyWait ( 10, TimeUnit.SECONDS );
+
+        // Navigate to Google.com
+        driver.get ( "http://chngusrqa.ar.bpn/" );
+
+        robotLogin ();
+
+        driver.findElement ( By.cssSelector ( "#edUsuarioBT" ) ).clear ();
+        driver.findElement ( By.cssSelector ( "#edUsuarioBT" ) ).sendKeys ( strUserName );
+        driver.findElement ( By.cssSelector ( "#btAceptar" ) ).click ();
+
+        // Close the browser
+        driver.quit ();
+    }
+
     public void loginToBT(String strUserName, String strPassword) throws InterruptedException, AWTException {
 
         this.setUserName ( strUserName );
@@ -88,7 +123,22 @@ public class Login {
             driver.get ( "http://btwebqa.ar.bpn/BTWeb/hlogin.aspx" );
         }
 
+        robotLogin ();
 
+
+        setUserName ( credenciales.username );
+        setPassword ( credenciales.password );
+
+        loginButton ();
+        cambiarVentana ();
+
+        robotLogin ();
+
+    }
+
+    public void robotLogin() throws InterruptedException, AWTException {
+
+        Credenciales credenciales = new Credenciales ();
         // Copia el texto al portapapeles
         StringSelection user = new StringSelection ( credenciales.username );
         StringSelection pass = new StringSelection ( credenciales.password );
@@ -121,13 +171,6 @@ public class Login {
 
         Thread.sleep ( 5000 );
 
-
-        setUserName ( credenciales.username );
-        setPassword ( credenciales.password );
-
-
-        loginButton ();
-        cambiarVentana ();
 
     }
 

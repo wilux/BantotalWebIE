@@ -7,8 +7,6 @@ import org.testng.annotations.Test;
 import java.awt.*;
 import java.lang.reflect.Method;
 
-import static Tools.extentreports.ExtentTestManager.startTest;
-
 
 public class InicioManualTest extends BaseTest {
 
@@ -17,8 +15,6 @@ public class InicioManualTest extends BaseTest {
     //Tests google calculator
     public void Login(Method method) throws InterruptedException, AWTException {
 
-        //ExtentReports Description
-        startTest ( method.getName (), "Valid Login Scenario with input manual username and password." );
 
         Login login = new Login ( driver );
         login.IngresarManual ( "QA" );

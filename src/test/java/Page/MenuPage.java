@@ -4,8 +4,6 @@ package Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import java.util.ArrayList;
-
 public class MenuPage {
     public By Logo = By.id ( "logo" );
     //Menu General

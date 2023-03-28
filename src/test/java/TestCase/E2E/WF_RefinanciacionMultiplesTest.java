@@ -5,7 +5,6 @@ import Config.BaseTest;
 import Task.*;
 import Tools.Restart;
 import Tools.SQLDatabaseConnection;
-import Tools.logs.Log;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -27,7 +26,7 @@ public class WF_RefinanciacionMultiplesTest extends BaseTest {
 
     @BeforeTest
     public void login() throws InterruptedException, AWTException, SQLException {
-        Log.reportLog ( "Step 0 - Abrimos BT y logueamos" );
+
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         Acciones acciones = new Acciones ( driver );
@@ -50,7 +49,6 @@ public class WF_RefinanciacionMultiplesTest extends BaseTest {
 
     @Test(dataProvider = "data-provider")
     public void entrevista(String cuil) throws InterruptedException, AWTException, SQLException {
-        Log.reportLog ( "Step 1 - Abrimos Bandeja Tareas e Iniciamos Entrevista" );
         Acciones acciones = new Acciones ( driver );
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
 
@@ -65,7 +63,7 @@ public class WF_RefinanciacionMultiplesTest extends BaseTest {
 
 
         //Ingresar Tipo y Documento
-        Log.reportLogScreen ( driver );
+
         acciones.entrevista ().IdentificacionPersona ( "C.U.I.L.", cuil );
         //Entrevista
         acciones.entrevista ().ActividadLaboral ();
@@ -94,8 +92,6 @@ public class WF_RefinanciacionMultiplesTest extends BaseTest {
         }
 
 
-        Log.reportLog ( "Step 2 - Seleccionamos productos a Refinanciar" );
-
         RefinanciacionSeleccionProductos refinanciacionSeleccionProductos =
                 new RefinanciacionSeleccionProductos ( driver );
         //Abrir/Retomar Entrevista Nueva
@@ -111,7 +107,6 @@ public class WF_RefinanciacionMultiplesTest extends BaseTest {
         refinanciacionSeleccionProductos.refinanciar ();
 
 
-        Log.reportLog ( "Step 3 - Datos Generales Amortizable" );
         RefinanciacionDatosGenerales refinanciacionDatosGenerales = new RefinanciacionDatosGenerales ( driver );
         refinanciacionDatosGenerales.cantidadCuotas ( "48" );
         refinanciacionDatosGenerales.confirmar ();
@@ -123,7 +118,7 @@ public class WF_RefinanciacionMultiplesTest extends BaseTest {
         Thread.sleep ( 5000 );
         Assert.assertTrue ( bd.estadoEntrevistaWf ( "Aprobar propuesta", NroEntrevista ) );
 
-        Log.reportLog ( "Step 4 - Recupero: Aprobar Propuesta" );
+
         //Reiniciamos con nuevo usuario
         Restart restart = new Restart ( driver );
         driver = restart.As ( usuarioRecupero );
@@ -147,7 +142,6 @@ public class WF_RefinanciacionMultiplesTest extends BaseTest {
         Assert.assertTrue ( bd.estadoEntrevistaWf ( "Validar propuesta", NroEntrevista ) );
 
 
-        Log.reportLog ( "Step 5 - Gerente: Valida Propuesta" );
         //Reiniciamos con nuevo usuario
         driver = restart.As ( usuarioPlataforma );
         RefinanciacionValidarPropuesta refinanciacionValidarPropuesta = new RefinanciacionValidarPropuesta ( driver );
@@ -167,7 +161,6 @@ public class WF_RefinanciacionMultiplesTest extends BaseTest {
         Assert.assertTrue ( bd.estadoEntrevistaWf ( "Controlar documentacion", NroEntrevista ) );
 
 
-        Log.reportLog ( "Step 6 - Centralizadora: Valida Propuesta" );
         //Reiniciamos con nuevo usuario
 
         driver = restart.As ( usuarioCentral );

@@ -1,8 +1,8 @@
 package Config;
 
 import Action.*;
-import Task.*;
 import Task.Menu;
+import Task.*;
 import org.openqa.selenium.WebDriver;
 
 import java.awt.*;

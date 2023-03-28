@@ -1,9 +1,7 @@
 package Task;
 
 import Action.Click;
-import Action.Write;
 import Page.CargaAvanzadaPage;
-import Page.SimulacionProductosPage;
 import org.openqa.selenium.WebDriver;
 
 public class CargaAvanzada extends CargaAvanzadaPage {

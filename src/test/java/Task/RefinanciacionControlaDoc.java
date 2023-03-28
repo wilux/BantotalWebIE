@@ -1,9 +1,7 @@
 package Task;
 
-import Action.Click;
 import Config.Acciones;
 import Page.RefinanciacionControlaDocPage;
-import Page.RefinanciacionValidarPropuestaPage;
 import org.openqa.selenium.WebDriver;
 
 import java.awt.*;

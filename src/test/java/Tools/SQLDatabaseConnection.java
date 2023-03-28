@@ -44,7 +44,7 @@ public class SQLDatabaseConnection {
         ResultSet resultSet = null;
 
         try (
-                Statement statement = con ();) {
+                Statement statement = con ()) {
 
             // Create and execute a SELECT SQL statement.
             resultSet = statement.executeQuery ( sql );
@@ -100,7 +100,7 @@ public class SQLDatabaseConnection {
         ResultSet resultSet = null;
         String value = "";
         try (
-                Statement statement = con ();) {
+                Statement statement = con ()) {
 
             // Create and execute a SELECT SQL statement.
             resultSet = statement.executeQuery ( sql );
@@ -125,7 +125,7 @@ public class SQLDatabaseConnection {
         List value = new ArrayList<> ();
 
         try (
-                Statement statement = con ();) {
+                Statement statement = con ()) {
 
             // Create and execute a SELECT SQL statement.
             resultSet = statement.executeQuery ( sql );
@@ -152,7 +152,7 @@ public class SQLDatabaseConnection {
     public int update(String sql, String db) throws SQLException {
 
         try (
-                Statement statement = con ( "arcncd07", db );) {
+                Statement statement = con ( "arcncd07", db )) {
 
             int result = statement.executeUpdate ( sql );
 
@@ -180,7 +180,7 @@ public class SQLDatabaseConnection {
         ResultSet resultSet = null;
 
         try (
-                Statement statement = con ();) {
+                Statement statement = con ()) {
 
             // Create and execute a SELECT SQL statement.
             resultSet = statement.executeQuery ( "select top 1 * from " + tabla );

@@ -1,7 +1,6 @@
 package Page;
 
 
-import Config.Credenciales;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

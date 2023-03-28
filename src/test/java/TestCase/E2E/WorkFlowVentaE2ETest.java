@@ -4,7 +4,6 @@ import Config.Acciones;
 import Config.BaseTest;
 import Tools.Restart;
 import Tools.SQLDatabaseConnection;
-import Tools.logs.Log;
 import com.google.common.base.Stopwatch;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
@@ -54,7 +53,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
     @Test(priority = 0, enabled = true)
     //@Test(priority = 0)
     public void Bandeja() throws InterruptedException {
-        Log.reportLog ( "Step 1 - Abrimos Bandeja Tareas e Iniciamos Entrevista" );
+
         Acciones acciones = new Acciones ( driver );
 
         //Abrir Entrevista Nueva
@@ -62,7 +61,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
 
         //Ingresar Tipo y Documento
-        Log.reportLogScreen ( driver );
+
         acciones.entrevista ().IdentificacionPersona ( "C.U.I.L.", cuil );
         //Entrevista
         acciones.entrevista ().CompletarGenerico ();
@@ -88,7 +87,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
     @Test(priority = 1, enabled = true, dependsOnMethods = "Bandeja")
     public void Simulacion() throws InterruptedException {
 
-        Log.reportLog ( "Step 2 - Iniciamos Simulacion" );
+
         Acciones acciones = new Acciones ( driver );
 
         //ejecutamos de la bandeja el tramite
@@ -118,7 +117,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
         //Simular
         acciones.simulacion ().Simular ();
-        Log.reportLogScreen ( driver );
+
         //Confirmar
         acciones.simulacion ().Confirmar ();
 
@@ -128,18 +127,18 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
     @Test(priority = 2, enabled = true, dependsOnMethods = "Simulacion")
     public void ConfirmarPlanDePagos() throws InterruptedException {
-        Log.reportLog ( "Step 3 - Confirmar Plan de Pagos Amortizable" );
+
         Acciones acciones = new Acciones ( driver );
-        Log.reportLogScreen ( driver );
+
         acciones.simulacion ().ConfirmarPlanPago ();
         Assert.assertTrue ( acciones.get ().Existe ( acciones.simulacion ().BTNOPCARTASIMULADOR ) );
     }
 
     @Test(priority = 3, enabled = true, dependsOnMethods = "ConfirmarPlanDePagos")
     public void ConfirmarSimulacion() throws InterruptedException {
-        Log.reportLog ( "Step 4 - Confirmar Simulacion" );
+
         Acciones acciones = new Acciones ( driver );
-        Log.reportLogScreen ( driver );
+
         acciones.simulacion ().ConfirmarSimulacion ();
         Assert.assertTrue ( acciones.get ().Existe ( acciones.bandejaTareas ().BTNOPOEJECUTAR ) );
     }
@@ -147,7 +146,6 @@ public class WorkFlowVentaE2ETest extends BaseTest {
     @Test(priority = 4, enabled = true, dependsOnMethods = "ConfirmarSimulacion")
     public void CargaAvanzada() throws InterruptedException, ParseException, SQLException {
 
-        Log.reportLog ( "Step 5 - Confirmar Carga Avanzada" );
 
         Acciones acciones = new Acciones ( driver );
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -161,7 +159,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
         bd.wc ( cuil );
 
         //Confirmar
-        Log.reportLogScreen ( driver );
+
         acciones.cargaAvanzada ().Aceptar ();
 
         Assert.assertTrue ( acciones.get ().Existe ( acciones.bandejaTareas ().BTNOPOEJECUTAR ) );
@@ -170,7 +168,6 @@ public class WorkFlowVentaE2ETest extends BaseTest {
     @Test(priority = 5, enabled = true, dependsOnMethods = "CargaAvanzada")
     public void Reutilizacion() throws InterruptedException {
 
-        Log.reportLog ( "Step 6 - Confirmar Reutilizacion" );
 
         Acciones acciones = new Acciones ( driver );
 
@@ -179,7 +176,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
         //Aceptar TD
         acciones.reutilizacion ().AceptarTarjetaDebito ();
-        Log.reportLogScreen ( driver );
+
 
         //Entrar a Perfil Riesgo
         acciones.reutilizacion ().PerfilRiesgo ();
@@ -190,14 +187,13 @@ public class WorkFlowVentaE2ETest extends BaseTest {
     @Test(priority = 6, enabled = true, dependsOnMethods = "Reutilizacion")
     public void MatrizRiesgo() throws InterruptedException, AWTException, SQLException {
 
-        Log.reportLog ( "Step 7 - Confirmar Matriz Riesgo" );
 
         Acciones acciones = new Acciones ( driver );
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
 
         //Aceptar Perfil Riesgo
         acciones.matrizRiesgo ().Confirmar ();
-        Log.reportLogScreen ( driver );
+
         //Esperar que los formularios esten para completar
         final Stopwatch stopwatch = Stopwatch.createStarted ();
         while ((stopwatch.elapsed ( TimeUnit.SECONDS ) < 10)) {
@@ -216,7 +212,6 @@ public class WorkFlowVentaE2ETest extends BaseTest {
     @Test(priority = 7, enabled = true, dependsOnMethods = "MatrizRiesgo")
     public void RevisionGerente() throws InterruptedException, SQLException, AWTException {
 
-        Log.reportLog ( "Step 8 - Confirmar desde Gerente" );
 
         //Cerrar y entrar como nuevo usuario
         Restart restart = new Restart ( driver );
@@ -234,7 +229,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
         //Remotar tramite
         acciones.bandejaTareas ().avanzarEntrevista ( NroEntrevista );
-        Log.reportLogScreen ( driver );
+
         //Confirmo Revision de Productos
         acciones.revisionProductos ().Confirmar ();
 
@@ -247,7 +242,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
     @Test(priority = 8, enabled = false, dependsOnMethods = "RevisionGerente")
     public void RevisionCreditos() throws InterruptedException, SQLException, AWTException {
 
-        Log.reportLog ( "Step 9 - Confirmar desde Creditos" );
+
         System.out.println ( "Driver Creditos " + driver.toString () );
 
         Thread.sleep ( 5000 );
@@ -266,7 +261,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
         //Remotar tramite
         acciones.bandejaTareas ().avanzarEntrevista ( NroEntrevista );
-        Log.reportLogScreen ( driver );
+
         //Confirmo Revision de Productos
         acciones.revisionProductos ().Confirmar ();
 
@@ -276,8 +271,6 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
     @Test(priority = 9, enabled = true, dependsOnMethods = "RevisionGerente")
     public void Liquidacion() throws InterruptedException, SQLException, AWTException {
-
-        Log.reportLog ( "Step 10 - Liquidar producto" );
 
 
         //Reiniciamos con nuevo usuario
@@ -297,20 +290,20 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
         //Remotar tramite
         acciones.bandejaTareas ().avanzarEntrevista ( NroEntrevista );
-        Log.reportLogScreen ( driver );
+
         //Confirmo Revision de Productos
         acciones.revisionParaConfirmar ().Confirmar ();
 
         //Perfil Riesgo
-        Log.reportLogScreen ( driver );
+
         acciones.revisionParaConfirmar ().PerfilRiesgo ();
 
         //Confirmar Matriz Final
-        Log.reportLogScreen ( driver );
+
         acciones.matrizRiesgo ().ConfirmarFinal ();
 
         //Liquidar
-        Log.reportLogScreen ( driver );
+
         acciones.revisionParaConfirmar ().Liquidar ();
 
         Assert.assertTrue ( true );
@@ -318,17 +311,17 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
     @Test(priority = 10, enabled = true, dependsOnMethods = "Liquidacion")
     public void PlandePagos() throws InterruptedException, SQLException {
-        Log.reportLog ( "Step 11 - Plan de Pagos Amortizable" );
+
         Acciones acciones = new Acciones ( driver );
 
         acciones.planPagosAmortizables ().Confirmar ();
-        Log.reportLogScreen ( driver );
+
 
         acciones.planPagosAmortizables ().VinculaGarantia ();
-        Log.reportLogScreen ( driver );
+
 
         //Finalizar
-        Log.reportLogScreen ( driver );
+
         acciones.revisionParaConfirmar ().Finalizar ();
 
         Assert.assertTrue ( true );

@@ -1,17 +1,12 @@
 package Task;
 
-import Action.Click;
-import Action.Get;
-import Action.Grid;
 import Action.Radio;
 import Config.Acciones;
 import Page.MatrizRiesgoPage;
-import Page.ReutilizacionABMProductosPage;
 import com.google.common.base.Stopwatch;
 import org.openqa.selenium.WebDriver;
 
 import java.awt.*;
-import java.util.concurrent.TimeUnit;
 
 public class MatrizRiesgo extends MatrizRiesgoPage {
     WebDriver driver;

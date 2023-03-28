@@ -4,7 +4,6 @@ import Config.Acciones;
 import Config.BaseTest;
 import Tools.SQLDatabaseConnection;
 import Tools.Tna;
-import Tools.logs.Log;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -46,8 +45,7 @@ public class TasaTnaPorPuntosTest extends BaseTest {
 
     @Test(priority = 0)
     public void TestSinPaqueteExistenteLlevaSinPaquete() throws InterruptedException {
-        Log.reportLog ( "Simulacion Prestamo de un cliente con Sin Paquete Existente, llevando un " +
-                                "MonoProducto sin puntos Particulares ni Generales" );
+
 
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -73,18 +71,14 @@ public class TasaTnaPorPuntosTest extends BaseTest {
 
         double tnaSimulado = Double.parseDouble ( acciones.simulacion ().Tna () );
 
-        Log.reportLog ( "La prueba es exitosa si la Tasa Base = TNA " );
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "TNA Esperado = " + (tnaBase) );
 
-        Assert.assertTrue ( tnaBase == tnaSimulado );
+        Assert.assertEquals ( tnaSimulado, tnaBase );
 
     }
 
     @Test(priority = 1)
     public void TestSinPaqueteLlevaPaqConPtosParticulares() throws InterruptedException {
-        Log.reportLog ( "Simulacion Prestamo de un cliente con SinPaquete Existente, llevando un " +
-                                "Paquete Con puntos Particulares y Generales" );
+
         Thread.sleep ( 3000 );
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -111,20 +105,14 @@ public class TasaTnaPorPuntosTest extends BaseTest {
         double ptosParticulares = Double.parseDouble ( bd.getValue ( sqlPuntosParticulares, "BPN_WEB_QA" ) );
         double tnaSimulado = Double.parseDouble ( acciones.simulacion ().Tna () );
 
-        Log.reportLog ( "La prueba es exitosa si TNA Simulado = TASA Base - Ptos Particulares " );
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "Ptos Particulares = " + ptosParticulares );
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "TNA Esperado = " + (tnaBase - ptosParticulares) );
 
-        Assert.assertTrue ( tnaSimulado == tnaBase - ptosParticulares );
+        Assert.assertEquals ( tnaBase - ptosParticulares, tnaSimulado );
 
     }
 
     @Test(priority = 2)
     public void TestSinPaqueteLlevaPaqConPuntosGralesSinPtoParticulares() throws InterruptedException {
-        Log.reportLog ( "Simulacion Prestamo de un cliente Sin Paquete Existente, llevando un " +
-                                "Prestamo con paquete Sin puntos Particulares solo Generales" );
+
         Thread.sleep ( 3000 );
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -150,12 +138,8 @@ public class TasaTnaPorPuntosTest extends BaseTest {
         double ptosGenerales = Double.parseDouble ( bd.getValue ( sqlPuntosGrales, "BPN_WEB_QA" ) );
         double tnaSimulado = Double.parseDouble ( acciones.simulacion ().Tna () );
 
-        Log.reportLog ( "La prueba es exitosa si TNA Simulado = TASA Base - Ptos Generales " );
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "Ptos Particulares = " + ptosGenerales );
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "TNA Esperado = " + (tnaBase - ptosGenerales) );
-        Assert.assertTrue ( tnaSimulado == tnaBase - ptosGenerales );
+
+        Assert.assertEquals ( tnaBase - ptosGenerales, tnaSimulado );
 
         //Dejo en Bandeja Tareas
         acciones.simulacion ().Cerrar ();
@@ -169,8 +153,7 @@ public class TasaTnaPorPuntosTest extends BaseTest {
 
     @Test(enabled = false) // Cambie las condiciones y no es valido el test
     public void TestConPaqueteLlevaPrestamoConMonoproductoSinPtosParticulares() throws InterruptedException {
-        Log.reportLog ( "Simulacion Prestamo de un cliente con Paquete Existente, llevando un " +
-                                "MonoProducto sin puntos Particulares solo Generales" );
+
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         Acciones acciones = new Acciones ( driver );
@@ -202,20 +185,14 @@ public class TasaTnaPorPuntosTest extends BaseTest {
         }
         double tnaSimulado = Double.parseDouble ( acciones.simulacion ().Tna () );
 
-        Log.reportLog ( "La prueba es exitosa si TNA Simulado = TASA Base - Ptos Generales " );
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "Ptos Generales = " + ptosGenerales );
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "TNA Esperado = " + (tnaBase - ptosGenerales) );
 
-        Assert.assertTrue ( tnaSimulado == tnaBase - ptosGenerales );
+        Assert.assertEquals ( tnaBase - ptosGenerales, tnaSimulado );
 
     }
 
     @Test(priority = 4)
     public void TestConPaqueteConPtosParticularesHaceUpgradeConPtosParticulares() throws InterruptedException {
-        Log.reportLog ( "Simulacion Prestamo de un cliente con Paquete Existente, llevando un " +
-                                "upgrade de Paquete con puntos Particulares para la linea" );
+
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         Acciones acciones = new Acciones ( driver );
@@ -241,20 +218,14 @@ public class TasaTnaPorPuntosTest extends BaseTest {
         double ptosParticulares = Double.parseDouble ( bd.getValue ( sqlPuntosParticulares, "BPN_WEB_QA" ) );
         double tnaSimulado = Double.parseDouble ( acciones.simulacion ().Tna () );
 
-        Log.reportLog ( "La prueba es exitosa si TNA Simulado = TASA Base - Ptos Particulares " );
-        Log.reportLog ( "Tasa Base = " + tnaBase );
-        Log.reportLog ( "Ptos Particulares = " + ptosParticulares );
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "TNA Esperado = " + (tnaBase - ptosParticulares) );
 
-        Assert.assertTrue ( tnaSimulado == tnaBase - ptosParticulares );
+        Assert.assertEquals ( tnaBase - ptosParticulares, tnaSimulado );
 
     }
 
     @Test(priority = 5)
     public void TestConPaqueteConPuntosHaceUpgradePaqSinPtoParticulares() throws InterruptedException {
-        Log.reportLog ( "Simulacion Prestamo de un cliente con Paquete Existente, llevando un " +
-                                "upgrade de Paquete sin puntos Particulares para la linea solo Generales" );
+
 
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -280,21 +251,15 @@ public class TasaTnaPorPuntosTest extends BaseTest {
         double ptosGenerales = Double.parseDouble ( bd.getValue ( sqlPuntosGrales, "BPN_WEB_QA" ) );
         double tnaSimulado = Double.parseDouble ( acciones.simulacion ().Tna () );
 
-        Log.reportLog ( "La prueba es exitosa si TNA Simulado = TASA Base - Ptos Generales " );
-        Log.reportLog ( "Tasa Base = " + tnaBase );
-        Log.reportLog ( "Ptos Generales = " + ptosGenerales );
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "TNA Esperado = " + (tnaBase - ptosGenerales) );
 
-        Assert.assertTrue ( tnaSimulado == tnaBase - ptosGenerales );
+        Assert.assertEquals ( tnaBase - ptosGenerales, tnaSimulado );
 
     }
 
 
     @Test(priority = 6)
     public void TestConPaqueteCasoBug() throws InterruptedException {
-        Log.reportLog ( "Simulacion Prestamo de un cliente con Paquete Existente, llevando un " +
-                                "upgrade de Paquete sin puntos Particulares para la linea solo Generales" );
+
 
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -330,15 +295,8 @@ public class TasaTnaPorPuntosTest extends BaseTest {
         double tnaSimulado = Double.parseDouble ( acciones.simulacion ().Tna () );
         double ptosParticulares = Double.parseDouble ( bd.getValue ( sqlPuntosParticulares, "BPN_WEB_QA" ) ); //1
 
-        Log.reportLog ( "La prueba es exitosa si TNA Simulado = TASA Base - Ptos Generales " );
-        Log.reportLog ( "Tasa Base = " + tnaBase );
-        Log.reportLog ( "Ptos Generales = " + ptosGenerales );
-        Log.reportLog ( "Ptos Particulares = " + ptosParticulares );
 
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "TNA Esperado = " + (tnaBase - ptosParticulares) );
-
-        Assert.assertTrue ( tnaSimulado == tnaBase - ptosParticulares );
+        Assert.assertEquals ( tnaBase - ptosParticulares, tnaSimulado );
 
     }
 }

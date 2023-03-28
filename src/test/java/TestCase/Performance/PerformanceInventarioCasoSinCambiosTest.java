@@ -1,17 +1,13 @@
 package TestCase.Performance;
 
 
-import Page.EjecutarPage;
-import Page.InventariodeCasosPage;
-import Page.LoginPage;
-import Page.MenuPage;
 import Config.BaseTest;
+import Page.InventariodeCasosPage;
 import Task.Ejecutar;
 import Task.Login;
 import Task.Menu;
 import Tools.Frame;
 import com.google.common.base.Stopwatch;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 import java.awt.*;

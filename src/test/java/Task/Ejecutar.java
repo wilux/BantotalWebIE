@@ -2,10 +2,7 @@ package Task;
 
 import Config.Acciones;
 import Page.EjecutarPage;
-import Page.LoginPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class Ejecutar {
     WebDriver driver;

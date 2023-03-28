@@ -1,7 +1,6 @@
 package Task;
 
 import Config.Acciones;
-import Page.RefinanciacionAprobarPropuestaPage;
 import Page.RefinanciacionValidarPropuestaPage;
 import org.openqa.selenium.WebDriver;
 

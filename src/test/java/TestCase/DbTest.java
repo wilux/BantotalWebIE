@@ -1,13 +1,11 @@
 package TestCase;
 
-import Page.LoginPage;
 import Tools.SQLDatabaseConnection;
 import com.google.common.base.Stopwatch;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 
 

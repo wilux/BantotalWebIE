@@ -2,8 +2,6 @@ package Task;
 
 import Config.Acciones;
 import Page.RefinanciacionDatosGeneralesPage;
-import Page.RefinanciacionSeleccionProductosPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.awt.*;

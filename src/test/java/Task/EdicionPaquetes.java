@@ -1,7 +1,5 @@
 package Task;
 
-import Action.Choose;
-import Action.Get;
 import Page.SimulacionProductosPage;
 import org.openqa.selenium.WebDriver;
 

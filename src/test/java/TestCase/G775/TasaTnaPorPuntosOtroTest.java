@@ -4,7 +4,6 @@ import Config.Acciones;
 import Config.BaseTest;
 import Tools.SQLDatabaseConnection;
 import Tools.Tna;
-import Tools.logs.Log;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -46,8 +45,7 @@ public class TasaTnaPorPuntosOtroTest extends BaseTest {
 
     @Test(priority = 0)
     public void TestConPaqueteCambios() throws InterruptedException {
-        Log.reportLog ( "Simulacion Prestamo de un cliente con Paquete Existente, llevando un " +
-                                "upgrade de Paquete sin puntos Particulares para la linea solo Generales" );
+
 
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -85,15 +83,8 @@ public class TasaTnaPorPuntosOtroTest extends BaseTest {
         double tnaSimulado = Double.parseDouble ( acciones.simulacion ().Tna () );
         double ptosParticulares = Double.parseDouble ( bd.getValue ( sqlPuntosParticulares, "BPN_WEB_QA" ) ); //1
 
-        Log.reportLog ( "La prueba es exitosa si TNA Simulado = TASA Base - Ptos Generales " );
-        Log.reportLog ( "Tasa Base = " + tnaBase );
-        Log.reportLog ( "Ptos Generales = " + ptosGenerales );
-        Log.reportLog ( "Ptos Particulares = " + ptosParticulares );
 
-        Log.reportLog ( "TNA Simulado = " + tnaSimulado );
-        Log.reportLog ( "TNA Esperado = " + (tnaBase - ptosParticulares) );
-
-        Assert.assertTrue ( tnaSimulado == tnaBase - ptosParticulares );
+        Assert.assertEquals ( tnaBase - ptosParticulares, tnaSimulado );
 
     }
 }

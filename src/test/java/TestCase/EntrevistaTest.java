@@ -49,7 +49,7 @@ public class EntrevistaTest extends BaseTest {
         System.out.println ( "Entrevista Nro: " + NroEntrevista );
 
         //Si no hay errores, la entrevista se completó bien.
-        Assert.assertTrue ( !entrevista.Error () );
+        Assert.assertFalse ( entrevista.Error () );
 
         if ( entrevista.Error () ) {
             System.out.println ( "Existen errores" );

@@ -4,9 +4,7 @@ import Action.Click;
 import Action.Get;
 import Action.Keyboard;
 import Action.Write;
-import Config.Acciones;
 import Page.RevisionParaConfirmarPage;
-import Page.RevisionProductosPage;
 import com.google.common.base.Stopwatch;
 import org.openqa.selenium.WebDriver;
 

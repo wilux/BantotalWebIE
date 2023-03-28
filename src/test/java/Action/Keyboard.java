@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 public class Keyboard {
 
-    private Robot robot;
+    private final Robot robot;
 
 
     public Keyboard() throws AWTException {

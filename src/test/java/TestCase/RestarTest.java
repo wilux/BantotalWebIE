@@ -4,7 +4,6 @@ import Config.Acciones;
 import Config.BaseTest;
 import Tools.Restart;
 import Tools.SQLDatabaseConnection;
-import Tools.logs.Log;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -31,11 +30,9 @@ public class RestarTest extends BaseTest {
         bd.CambiarUsuario ( usuarioPlataforma );
         Acciones acciones = new Acciones ( driver );
         acciones.login ().Ingresar ( "QA" );
-        Log.reportLog ( "Step 1 - Ingreso como Plataforma" );
-        Log.reportLogScreen ( driver );
+
         //Menu Ejecutar
         acciones.menu ().Ejecutar ();
-        Log.reportLogScreen ( driver );
         Assert.assertTrue ( true );
         System.out.println ( "Driver Normal " + driver.toString () );
     }
@@ -46,13 +43,10 @@ public class RestarTest extends BaseTest {
         Restart restart = new Restart ( driver );
         driver = restart.As ( usuarioGerencia );
         System.out.println ( "Driver usuarioGerencia " + driver.toString () );
-        Log.reportLog ( "Step 2 - Ingreso como Gerente" );
-        Log.reportLogScreen ( driver );
+
         //Menu Ejecutar
         Acciones acciones2 = new Acciones ( driver );
         acciones2.menu ().Ejecutar ();
-        Log.reportLog ( "Step 3 - Otra foto Test" );
-        Log.reportLogScreen ( driver );
         Assert.assertTrue ( true );
     }
 
@@ -61,15 +55,12 @@ public class RestarTest extends BaseTest {
         //Tests relogin
         Restart restart = new Restart ( driver );
         driver = restart.As ( usuarioCreditos );
-        Log.reportLog ( "Step 3 - Ingreso como Creditos" );
-        Log.reportLogScreen ( driver );
+
         Acciones acciones3 = new Acciones ( driver );
         System.out.println ( "Driver usuarioCreditos " + driver.toString () );
         //
         //Menu Ejecutar
         acciones3.menu ().Ejecutar ();
-        Log.reportLog ( "Step 3 - Otra foto Test" );
-        Log.reportLogScreen ( driver );
         Assert.assertTrue ( true );
 
     }

@@ -4,11 +4,8 @@ package Task;
 import Action.CheckBox;
 import Action.Click;
 import Action.Get;
-import Action.Write;
 import Page.PlanPagosAmortizablesPage;
 import com.google.common.base.Stopwatch;
-import org.checkerframework.checker.units.qual.C;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;

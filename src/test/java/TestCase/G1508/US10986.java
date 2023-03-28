@@ -12,8 +12,6 @@ import java.awt.*;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 
-import static Tools.extentreports.ExtentTestManager.startTest;
-
 
 public class US10986 extends BaseTest {
 
@@ -45,7 +43,7 @@ public class US10986 extends BaseTest {
         EdicionPaquetePage edicionPaquetePage = new EdicionPaquetePage ( driver );
 
         //ExtentReports Description
-        startTest ( method.getName (), "TASK 10972 - Controlando existencia de campo selectJBNYC5TCA" );
+
 
         Assert.assertTrue ( acciones.get ().Existe ( edicionPaquetePage.selectJBNYC5TCA ) );
 
@@ -57,9 +55,6 @@ public class US10986 extends BaseTest {
         Acciones acciones = new Acciones ( driver );
         EdicionPaquetePage edicionPaquetePage = new EdicionPaquetePage ( driver );
 
-        //ExtentReports Description
-        startTest ( method.getName (), "TASK 10972 - Controlando existencia de campo selectJBNYC5TCA" );
-
 
         Assert.assertTrue ( acciones.get ().Existe ( edicionPaquetePage.input_JBNYC5POR ) );
 
@@ -70,9 +65,6 @@ public class US10986 extends BaseTest {
 
         Acciones acciones = new Acciones ( driver );
         EdicionPaquetePage edicionPaquetePage = new EdicionPaquetePage ( driver );
-
-        //ExtentReports Description
-        startTest ( method.getName (), "TASK 10972 - Controlando existencia de campo selectJBNYC5TCA" );
 
 
         Assert.assertTrue ( acciones.get ().Existe ( edicionPaquetePage.input_JBNYC5TOA ) );

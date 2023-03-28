@@ -2,7 +2,6 @@ package Task;
 
 import Config.Acciones;
 import Page.RefinanciacionAprobarPropuestaPage;
-import Page.RefinanciacionDatosGeneralesPage;
 import org.openqa.selenium.WebDriver;
 
 public class RefinanciacionAprobarPropuesta extends RefinanciacionAprobarPropuestaPage {

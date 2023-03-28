@@ -42,7 +42,7 @@ public class Entrevista {
         System.out.println ( "Buscando mensajes de error" );
         Frame frame = new Frame ( driver );
         if ( frame.BuscarFrame ( By.id ( "TXTMESSAGES" ) ) ) {
-            System.out.printf ( "Elemento TXTMESSAGES encontrado " );
+            System.out.print ( "Elemento TXTMESSAGES encontrado " );
             WebElement element = driver.findElement ( By.id ( "TXTMESSAGES" ) );
             String imgError = element.findElement ( By.cssSelector ( "img" ) ).getAttribute ( "src" );
 

@@ -12,7 +12,6 @@ import java.awt.*;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 
-import static Tools.extentreports.ExtentTestManager.startTest;
 
 public class US10972 extends BaseTest {
 
@@ -36,8 +35,6 @@ public class US10972 extends BaseTest {
     @Test(priority = 0, description = "Prueba de existencia de nuevas columna JBNYC5TCA en jbnyc5")
     public void exist_JBNYC5TCA(Method method) throws SQLException {
 
-        //ExtentReports Description
-        startTest ( method.getName (), "TASK 10986 - Existe en jbnyc5 JBNYC5TCA  Tipo de Calculo" );
 
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
 
@@ -48,8 +45,6 @@ public class US10972 extends BaseTest {
     @Test(priority = 0, description = "Prueba de existencia de nuevas columna JBNYC5POR en jbnyc5")
     public void exist_JBNYC5POR(Method method) throws SQLException {
 
-        //ExtentReports Description
-        startTest ( method.getName (), "TASK 10986 - Existe en jbnyc5 JBNYC5POR  Porcentaje de Tope" );
 
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
 
@@ -60,8 +55,6 @@ public class US10972 extends BaseTest {
     @Test(priority = 0, description = "Prueba de existencia de nuevas columna JBNYC5TOA en jbnyc5")
     public void exist_JBNYC5TOA(Method method) throws SQLException {
 
-        //ExtentReports Description
-        startTest ( method.getName (), "TASK 10986 - Existe en jbnyc5 JBNYC5TOA Tope ACC" );
 
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
 
