@@ -19,33 +19,40 @@ public class Choose {
     }
 
     public void byText(By locator, String text) {
-
         Frame frame = new Frame ( driver );
-        if ( frame.BuscarFrame ( locator ) ) {
-            Select select = new Select ( driver.findElement ( locator ) );
-            select.selectByVisibleText ( text );
-        }
-        else {
-            System.out.println ( "No se encontró " + locator );
+        final Stopwatch stopwatch = Stopwatch.createStarted ();
+        while ((stopwatch.elapsed ( TimeUnit.SECONDS ) < 5)) {
+
+            if ( frame.BuscarFrame ( locator ) ) {
+                Select select = new Select ( driver.findElement ( locator ) );
+                select.selectByVisibleText ( text );
+                break;
+            }
+            else {
+                System.out.println ( "No se encontró " + locator );
+                continue;
+            }
         }
     }
 
     public void byValue(By locator, String value) {
 
-
         Frame frame = new Frame ( driver );
+        final Stopwatch stopwatch = Stopwatch.createStarted ();
 
-        try {
+        while ((stopwatch.elapsed ( TimeUnit.SECONDS ) < 5)) {
             if ( frame.BuscarFrame ( locator ) ) {
-                frame.BuscarFrame ( locator );
                 Select select = new Select ( driver.findElement ( locator ) );
                 select.selectByValue ( value );
                 System.out.println ( value );
-
+                break;
             }
-        } catch (Exception e) {
-
+            else {
+                System.out.println ( "No se encontró " + locator );
+                continue;
+            }
         }
+
     }
 
 }

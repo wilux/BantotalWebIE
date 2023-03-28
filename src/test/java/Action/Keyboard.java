@@ -27,6 +27,19 @@ public class Keyboard {
         }
     }
 
+
+    public void Tab() {
+
+        robot.keyPress ( KeyEvent.VK_TAB );
+        robot.keyRelease ( KeyEvent.VK_TAB );
+    }
+
+    public void Enter() {
+
+        robot.keyPress ( KeyEvent.VK_ENTER );
+        robot.keyRelease ( KeyEvent.VK_ENTER );
+    }
+
     public void CtrlEnter() {
 
 

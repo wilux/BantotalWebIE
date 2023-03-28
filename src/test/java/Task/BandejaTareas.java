@@ -1,10 +1,11 @@
 package Task;
 
 import Action.Click;
+import Action.Get;
+import Action.Grid;
 import Action.Write;
 import Config.Acciones;
 import Page.BandejaTareasPage;
-import Action.Grid;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -15,6 +16,12 @@ public class BandejaTareas extends BandejaTareasPage {
     public BandejaTareas(WebDriver driver) {
         super ( driver );
         this.driver = driver;
+    }
+
+
+    public boolean bandejaVisible() {
+        Get get = new Get ( driver );
+        return get.Existe ( InputBuscarAsunto );
     }
 
     public void filtrar(String nroEntrevista) {
@@ -42,7 +49,7 @@ public class BandejaTareas extends BandejaTareasPage {
         Grid grid = new Grid ( driver );
 
         //Buscar entrevista
-        filtrar ( nroEntrevista );
+        // filtrar ( nroEntrevista );
         //Tomar primer fila
 
         grid.rowSelectbyFila ( Grilla_Tareas, PrimerTarea );
@@ -58,7 +65,7 @@ public class BandejaTareas extends BandejaTareasPage {
         Grid grid = new Grid ( driver );
 
         //Buscar entrevista
-        filtrar ( nroEntrevista );
+        //filtrar ( nroEntrevista );
         //Tomar primer fila
 
         grid.rowSelectbyFila ( Grilla_Tareas, PrimerTarea );
@@ -73,7 +80,7 @@ public class BandejaTareas extends BandejaTareasPage {
         Grid grid = new Grid ( driver );
 
         //Buscar entrevista
-        filtrar ( nroEntrevista );
+//        filtrar ( nroEntrevista );
         //Tomar primer fila
 
         grid.rowSelectbyFila ( Grilla_Tareas, PrimerTarea );
@@ -90,7 +97,7 @@ public class BandejaTareas extends BandejaTareasPage {
         Grid grid = new Grid ( driver );
         Acciones acciones = new Acciones ( driver );
         //Buscar entrevista
-        filtrar ( nroEntrevista );
+        //filtrar ( nroEntrevista );
         Thread.sleep ( 200 );
         grid.rowSelectbyFila ( Grilla_Tareas, PrimerTarea );
         Thread.sleep ( 200 );

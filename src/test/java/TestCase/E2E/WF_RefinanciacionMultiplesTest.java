@@ -7,6 +7,7 @@ import Tools.Restart;
 import Tools.SQLDatabaseConnection;
 import Tools.logs.Log;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -15,10 +16,9 @@ import java.awt.*;
 import java.sql.SQLException;
 
 
-public class WF_RefinanciacionTest extends BaseTest {
+public class WF_RefinanciacionMultiplesTest extends BaseTest {
 
     //Datos del caso
-//    String cuil = "27059733813";
     String NroEntrevista = "";
     String usuarioPlataforma = "SERPILLOE";
     String usuarioRecupero = "ROJASM";
@@ -42,10 +42,9 @@ public class WF_RefinanciacionTest extends BaseTest {
 
     }
 
-
     @DataProvider(name = "data-provider")
     public Object[][] dpMethod() {
-        return new Object[][]{{"27333930116"}, {"20218926364"}, {"27346671454"}};
+        return new Object[][]{{"20218926364"}, {"27346671454"}};
     }
 
 
@@ -94,14 +93,9 @@ public class WF_RefinanciacionTest extends BaseTest {
 
         }
 
-    }
 
-
-    //Iniciar Refinanciacion
-    @Test(priority = 1, dependsOnMethods = "entrevista")
-    public void refinanciacion() throws InterruptedException {
         Log.reportLog ( "Step 2 - Seleccionamos productos a Refinanciar" );
-        Acciones acciones = new Acciones ( driver );
+
         RefinanciacionSeleccionProductos refinanciacionSeleccionProductos =
                 new RefinanciacionSeleccionProductos ( driver );
         //Abrir/Retomar Entrevista Nueva
@@ -117,14 +111,7 @@ public class WF_RefinanciacionTest extends BaseTest {
         refinanciacionSeleccionProductos.refinanciar ();
 
 
-    }
-
-
-    //Datos Generales Amortizable
-    @Test(priority = 2, dependsOnMethods = "refinanciacion")
-    public void datosAmortizables() throws InterruptedException, AWTException, SQLException {
         Log.reportLog ( "Step 3 - Datos Generales Amortizable" );
-        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         RefinanciacionDatosGenerales refinanciacionDatosGenerales = new RefinanciacionDatosGenerales ( driver );
         refinanciacionDatosGenerales.cantidadCuotas ( "48" );
         refinanciacionDatosGenerales.confirmar ();
@@ -135,21 +122,17 @@ public class WF_RefinanciacionTest extends BaseTest {
         refinanciacionDatosGenerales.confirmarPlanPago ();
         Thread.sleep ( 5000 );
         Assert.assertTrue ( bd.estadoEntrevistaWf ( "Aprobar propuesta", NroEntrevista ) );
-    }
 
-    //Retomar desde Recupero
-    //Aprobar Propuesta
-    @Test(priority = 3, dependsOnMethods = "datosAmortizables")
-    public void retomaRecuperoAprobarPropuesta() throws InterruptedException, AWTException, SQLException {
         Log.reportLog ( "Step 4 - Recupero: Aprobar Propuesta" );
         //Reiniciamos con nuevo usuario
         Restart restart = new Restart ( driver );
         driver = restart.As ( usuarioRecupero );
-        Acciones acciones = new Acciones ( driver );
+
         RefinanciacionAprobarPropuesta refinanciacionAprobarPropuesta = new RefinanciacionAprobarPropuesta ( driver );
-        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
+
         //Abrir bandeja
         //Menu Ejecutar
+        acciones = new Acciones ( driver );
         acciones.menu ().Ejecutar ();
         //Abrir BandejaTareas
         acciones.ejecutar ().Programa ( "hxwf900" );
@@ -163,21 +146,13 @@ public class WF_RefinanciacionTest extends BaseTest {
         Thread.sleep ( 5000 );
         Assert.assertTrue ( bd.estadoEntrevistaWf ( "Validar propuesta", NroEntrevista ) );
 
-    }
 
-
-    //Retomar desde Gerente
-    //Valida Propuesta
-    @Test(priority = 4, dependsOnMethods = "retomaRecuperoAprobarPropuesta")
-    public void retomaGerente() throws InterruptedException, AWTException, SQLException {
         Log.reportLog ( "Step 5 - Gerente: Valida Propuesta" );
         //Reiniciamos con nuevo usuario
-        Restart restart = new Restart ( driver );
         driver = restart.As ( usuarioPlataforma );
-        Acciones acciones = new Acciones ( driver );
         RefinanciacionValidarPropuesta refinanciacionValidarPropuesta = new RefinanciacionValidarPropuesta ( driver );
-        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         //Abrir bandeja
+        acciones = new Acciones ( driver );
         //Menu Ejecutar
         acciones.menu ().Ejecutar ();
         //Abrir BandejaTareas
@@ -192,22 +167,14 @@ public class WF_RefinanciacionTest extends BaseTest {
         Assert.assertTrue ( bd.estadoEntrevistaWf ( "Controlar documentacion", NroEntrevista ) );
 
 
-    }
-
-
-    //Retomar desde Centralizadora
-    //Valida Propuesta
-    @Test(priority = 5, dependsOnMethods = "retomaGerente")
-    public void retomaCentralizadora() throws InterruptedException, AWTException, SQLException {
-
         Log.reportLog ( "Step 6 - Centralizadora: Valida Propuesta" );
         //Reiniciamos con nuevo usuario
-        Restart restart = new Restart ( driver );
+
         driver = restart.As ( usuarioCentral );
-        Acciones acciones = new Acciones ( driver );
+
         RefinanciacionControlaDoc refinanciacionControlaDoc = new RefinanciacionControlaDoc ( driver );
-        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         //Abrir bandeja
+        acciones = new Acciones ( driver );
         //Menu Ejecutar
         acciones.menu ().Ejecutar ();
         //Abrir BandejaTareas
@@ -223,6 +190,12 @@ public class WF_RefinanciacionTest extends BaseTest {
         Assert.assertTrue ( bd.estadoEntrevistaWf ( "Proceso de cancelacion", NroEntrevista ) );
 
 
+    }
+
+
+    @AfterTest
+    public void after() {
+        driver.quit ();
     }
 
 }

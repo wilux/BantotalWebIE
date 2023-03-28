@@ -2,19 +2,14 @@ package Task;
 
 import Config.Credenciales;
 import Page.LoginPage;
-import com.google.common.base.Stopwatch;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 
 public class Login {
@@ -27,8 +22,6 @@ public class Login {
     }
 
 
-    //Set user name in textbox
-
     public void setUserName(String strUserName) {
         LoginPage loginPage = new LoginPage ( driver );
         driver.findElement ( loginPage.UserInput ).sendKeys ( strUserName );
@@ -37,22 +30,7 @@ public class Login {
 
     public void loginButton() throws AWTException, InterruptedException {
         LoginPage loginPage = new LoginPage ( driver );
-//        System.out.println ( "Driver cuando quiero hacer click en LoginButton " + driver.toString () );
         driver.findElement ( loginPage.LoginButton ).click ();
-//        Robot robot = new Robot ();
-
-
-//
-//        robot.keyPress ( KeyEvent.VK_CONTROL );
-//        Thread.sleep ( 200 );
-//        robot.keyPress ( KeyEvent.VK_SUBTRACT );
-
-
-//        robot.keyPress ( KeyEvent.VK_TAB );
-//        robot.keyPress ( KeyEvent.VK_ENTER );
-//        robot.keyRelease ( KeyEvent.VK_TAB );
-//        robot.keyRelease ( KeyEvent.VK_ENTER );
-
     }
 
     public void setPassword(String strPassword) {
@@ -89,15 +67,9 @@ public class Login {
 
     public void loginToBT(String strUserName, String strPassword) throws InterruptedException, AWTException {
 
-        //Fill user name
-
         this.setUserName ( strUserName );
-
-        //Fill password
-
         this.setPassword ( strPassword );
 
-        //Click Login button
         loginButton ();
         Thread.sleep ( 2000 );
         cambiarVentana ();
@@ -111,15 +83,44 @@ public class Login {
 
             driver.get ( "http://btdesafuncional.ar.bpn/BTWeb/hlogin.aspx" );
         }
-        else if ( ambiente.equals ( "QA" ) ) {
+        else {
 
             driver.get ( "http://btwebqa.ar.bpn/BTWeb/hlogin.aspx" );
         }
-        else {
-            System.out.println ( "El Ambiente elegido " + ambiente + " no es valido, se asume QA" );
-            System.out.println ( "Ambientes validos QA o DF" );
-            driver.get ( "http://btwebqa.ar.bpn/BTWeb/hlogin.aspx" );
-        }
+
+
+        // Copia el texto al portapapeles
+        StringSelection user = new StringSelection ( credenciales.username );
+        StringSelection pass = new StringSelection ( credenciales.password );
+        Toolkit.getDefaultToolkit ().getSystemClipboard ().setContents ( user, null );
+
+        // Espera 2 segundos para dar tiempo a que se copie el texto
+        Thread.sleep ( 2000 );
+
+        // Pega el texto en el campo de texto
+        Robot robot = new Robot ();
+        robot.keyPress ( KeyEvent.VK_CONTROL );
+        robot.keyPress ( KeyEvent.VK_V );
+        robot.keyRelease ( KeyEvent.VK_V );
+        robot.keyRelease ( KeyEvent.VK_CONTROL );
+
+        Thread.sleep ( 2000 );
+        Toolkit.getDefaultToolkit ().getSystemClipboard ().setContents ( pass, null );
+        robot.keyPress ( KeyEvent.VK_TAB );
+        robot.keyRelease ( KeyEvent.VK_TAB );
+
+        Thread.sleep ( 2000 );
+        robot.keyPress ( KeyEvent.VK_CONTROL );
+        robot.keyPress ( KeyEvent.VK_V );
+        robot.keyRelease ( KeyEvent.VK_V );
+        robot.keyRelease ( KeyEvent.VK_CONTROL );
+
+        Thread.sleep ( 2000 );
+        robot.keyPress ( KeyEvent.VK_ENTER );
+        robot.keyRelease ( KeyEvent.VK_ENTER );
+
+        Thread.sleep ( 5000 );
+
 
         setUserName ( credenciales.username );
         setPassword ( credenciales.password );

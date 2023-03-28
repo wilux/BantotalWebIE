@@ -223,7 +223,7 @@ public class SQLDatabaseConnection {
 
         //FirmaDigital
         String sql_updateFirma = "select *  from TRAMITE where CuitCuil = '" + cuil + "' and activo = 1";
-        return (!getValue ( sql_updateFirma, db_Firma ).equals ( "" ));
+        return (getValue ( sql_updateFirma, db_Firma ).equals ( "" ));
     }
 
     public boolean estadoEntrevistaWf(String valor, String entrevista) throws SQLException {

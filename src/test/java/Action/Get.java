@@ -115,16 +115,22 @@ public class Get {
 
 
     public boolean Existe(By locator) {
-
         Frame frame = new Frame ( driver );
-        boolean value = false;
-        if ( frame.BuscarFrame ( locator ) ) {
-            value = true;
+        final Stopwatch stopwatch = Stopwatch.createStarted ();
+        boolean estado = false;
+        while ((stopwatch.elapsed ( TimeUnit.SECONDS ) < 300)) {
+            if ( frame.BuscarFrame ( locator ) ) {
+                try {
+                    driver.findElement ( locator ).isDisplayed ();
+                    estado = true;
+                    break;
+                } catch (Exception e) {
+                    System.out.println ( "No se encontró " + locator );
+                    continue;
+                }
+            }
         }
-        else {
-            System.out.println ( "No se encontró " + locator );
-        }
-        return value;
+        return estado;
     }
 
 

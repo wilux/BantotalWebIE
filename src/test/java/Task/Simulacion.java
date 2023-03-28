@@ -1,13 +1,9 @@
 package Task;
 
 import Action.*;
-import Page.EjecutarPage;
 import Page.SimulacionProductosPage;
 import Tools.Frame;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class Simulacion extends SimulacionProductosPage {
     WebDriver driver;
@@ -18,6 +14,12 @@ public class Simulacion extends SimulacionProductosPage {
         this.driver = driver;
     }
 
+
+    public boolean simulacionVisible() {
+        Get get = new Get ( driver );
+        return get.Existe ( SelectPaquete );
+    }
+
     public void Paquete(String paquete) {
 
         Choose choose = new Choose ( driver );
@@ -26,10 +28,10 @@ public class Simulacion extends SimulacionProductosPage {
     }
 
     //    value "309203"+003 -> 309/203
-    public void Linea(String ejemplo_309203) throws InterruptedException {
+    public void Linea(String ejemplo_309201) throws InterruptedException {
         Thread.sleep ( 3000 );
         Choose choose = new Choose ( driver );
-        choose.byValue ( SelectLineaPrestamo, ejemplo_309203 + "003" );
+        choose.byValue ( SelectLineaPrestamo, ejemplo_309201 + "003" );
         Thread.sleep ( 1000 );
 
     }
@@ -54,6 +56,7 @@ public class Simulacion extends SimulacionProductosPage {
 
         Thread.sleep ( 3000 );
         Write write = new Write ( driver );
+        write.Clear ( InputMontoSolicitado );
         write.Js ( InputMontoSolicitado, monto );
         Thread.sleep ( 3000 );
 
@@ -85,13 +88,32 @@ public class Simulacion extends SimulacionProductosPage {
 
     }
 
+    public void Tarjetas(int cantidad) {
+
+
+        Click click = new Click ( driver );
+        CheckBox checkBox = new CheckBox ( driver );
+        if ( cantidad == 2 ) {
+            checkBox.Check ( CheckTC1 );
+            checkBox.Check ( CheckTC2 );
+        }
+        else if ( cantidad == 1 ) {
+            checkBox.Check ( CheckTC1 );
+        }
+
+        click.On ( BTNOPPAQUETIZAR );
+
+
+    }
+
     public void Tarjetas() {
+
 
         Click click = new Click ( driver );
         CheckBox checkBox = new CheckBox ( driver );
         checkBox.Check ( CheckTC1 );
         checkBox.Check ( CheckTC2 );
-
+        checkBox.Check ( CheckTC1 );
         click.On ( BTNOPPAQUETIZAR );
 
 

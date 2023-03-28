@@ -27,8 +27,8 @@ public class RevisionProductos extends RevisionProductosPage {
 
         write.On ( InputObservaciones, "Test" );
         click.On ( BTNOPCONFIRMAR );
-        click.On ( BTN_SI );
-        
+//        click.On ( BTN_SI );
+
 
     }
 

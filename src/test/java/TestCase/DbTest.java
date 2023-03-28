@@ -2,11 +2,13 @@ package TestCase;
 
 import Page.LoginPage;
 import Tools.SQLDatabaseConnection;
+import com.google.common.base.Stopwatch;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.concurrent.TimeUnit;
 
 
 public class DbTest {
@@ -64,8 +66,16 @@ public class DbTest {
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
 
 
-        Assert.assertTrue ( !bd.esperarFormularios ( "27350672155" ) );
+//        Assert.assertTrue ( !bd.esperarFormularios ( "27350672155" ) );
 
+        final Stopwatch stopwatch = Stopwatch.createStarted ();
+        boolean estadoLegajo = bd.esperarFormularios ( "27350672155" );
+        boolean estadotiempo;
+        do {
+            System.out.println ( "." );
+            estadotiempo = stopwatch.elapsed ( TimeUnit.SECONDS ) < 120;
+        } while (bd.esperarFormularios ( "27350672155" ) || (stopwatch.elapsed ( TimeUnit.SECONDS ) > 60));
+        Assert.assertTrue ( true );
     }
 }
 

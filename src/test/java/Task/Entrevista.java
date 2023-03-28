@@ -20,10 +20,10 @@ public class Entrevista {
     }
 
     public void CompletarGenerico() throws InterruptedException {
-        Modalidad ( "Presencial" );
-        ActividadLaboral ();
-        DatosDelNegocio ();
-        DatosPersonales ();
+        // Modalidad ( "Presencial" );
+        // ActividadLaboral ();
+        // DatosDelNegocio ();
+        // DatosPersonales ();
         DatosContacto ();
         CuentaDebito ();
         Ingresos ( "Dependiente" );
@@ -67,10 +67,10 @@ public class Entrevista {
         System.out.println ( "Ingresando Entrevista para el Documento " + cuilCuit );
         //Ingresar Tipo y Documento
         EntrevistaPage entrevistaPage = new EntrevistaPage ( driver );
-        Choose choose = new Choose ( driver );
+        //
         Click click = new Click ( driver );
         Write write = new Write ( driver );
-        choose.byText ( entrevistaPage.SelectTipo, tipo );
+        //choose.byText ( entrevistaPage.SelectTipo, tipo );
         write.On ( entrevistaPage.InputDocumento, cuilCuit );
         click.On ( entrevistaPage.BTNOPVALIDAR );
 
