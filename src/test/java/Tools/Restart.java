@@ -2,14 +2,12 @@ package Tools;
 
 import Config.Acciones;
 import Config.BaseTest;
-import Task.Login;
 import Tools.logs.Log;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.testng.annotations.Test;
 
 import java.awt.*;
-import java.lang.reflect.Method;
+import java.sql.SQLException;
 
 
 public class Restart extends BaseTest {
@@ -26,7 +24,7 @@ public class Restart extends BaseTest {
 
     }
 
-    public WebDriver As(String user) throws InterruptedException, AWTException {
+    public WebDriver As(String user) throws InterruptedException, AWTException, SQLException {
 
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();

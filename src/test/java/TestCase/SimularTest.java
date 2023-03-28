@@ -1,13 +1,13 @@
 package TestCase;
 
-import Config.BaseTest;
 import Config.Acciones;
+import Config.BaseTest;
 import Tools.SQLDatabaseConnection;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.awt.*;
+import java.sql.SQLException;
 
 
 public class SimularTest extends BaseTest {
@@ -15,14 +15,14 @@ public class SimularTest extends BaseTest {
 
     @Test
     //Tests google calculator
-    public void Simular() throws InterruptedException, AWTException {
+    public void Simular() throws InterruptedException, AWTException, SQLException {
 
 
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         Acciones acciones = new Acciones ( driver );
 
-        //Inicio Como usuario de Plataforma
+
         bd.CambiarUsuario ( "SERPILLOE" );
 
         //Logueamos

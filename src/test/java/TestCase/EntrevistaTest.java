@@ -1,14 +1,14 @@
 package TestCase;
 
 import Config.BaseTest;
-import Task.*;
 import Task.Menu;
+import Task.*;
 import Tools.SQLDatabaseConnection;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.awt.*;
+import java.sql.SQLException;
 
 
 public class EntrevistaTest extends BaseTest {
@@ -16,7 +16,7 @@ public class EntrevistaTest extends BaseTest {
 
     @Test
     //Tests google calculator
-    public void Completar() throws InterruptedException, AWTException {
+    public void Completar() throws InterruptedException, AWTException, SQLException {
 
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         //Inicio Como usuario de Plataforma

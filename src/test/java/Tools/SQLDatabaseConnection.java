@@ -9,22 +9,42 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class SQLDatabaseConnection {
 
 
-    // Connect to your database.
-    // Replace server name, username, and password with your credentials
+    public Statement con(String server, String db) throws SQLException {
+
+        String connectionUrl = "jdbc:sqlserver://" + server + ";databaseName=" + db + ";encrypt=true;" +
+                "integratedSecurity=true;" +
+                "authenticationScheme=nativeAuthentication;trustServerCertificate=true;";
+
+        Connection connection = DriverManager.getConnection ( connectionUrl );
+        return connection.createStatement ();
+
+    }
+
+    public Statement con() throws SQLException {
+
+        String connectionUrl = "jdbc:sqlserver://arcncd07;databaseName=BPN_WEB_QA;encrypt=true;" +
+                "integratedSecurity=true;" +
+                "authenticationScheme=nativeAuthentication;trustServerCertificate=true;";
+
+        Connection connection = DriverManager.getConnection ( connectionUrl );
+        return connection.createStatement ();
+
+    }
+
     public void select(String sql) {
 
-
-        String connectionUrl = "jdbc:sqlserver://arcncd07;databaseName=BPN_WEB_QA;encrypt=true;integratedSecurity=true;authenticationScheme=nativeAuthentication;trustServerCertificate=true;trustStore= C:\\Program Files\\Java\\jdk1.8.0_251\\lib\\security\\cacert;trustStorePassword=changeit";
         ResultSet resultSet = null;
 
-        try (Connection connection = DriverManager.getConnection ( connectionUrl );
-             Statement statement = connection.createStatement ();) {
+        try (
+                Statement statement = con ();) {
 
             // Create and execute a SELECT SQL statement.
             resultSet = statement.executeQuery ( sql );
@@ -39,7 +59,7 @@ public class SQLDatabaseConnection {
         }
     }
 
-    public void wc(String cuil) throws ParseException {
+    public void wc(String cuil) throws ParseException, SQLException {
         Credenciales credenciales = new Credenciales ();
         String db = "BPN_WEB_QA";
         String usuario = getValue ( "select J055XZUsr from J055XZ where J055XZUad='" + credenciales.username + "'", db );
@@ -77,13 +97,10 @@ public class SQLDatabaseConnection {
     public String getValue(String sql, String db) {
 
 
-        String connectionUrl = "jdbc:sqlserver://arcncd07;databaseName=" + db + ";encrypt=true;integratedSecurity=true;" +
-                "authenticationScheme=nativeAuthentication;trustServerCertificate=true;trustStore= C:\\Program Files\\Java\\jdk1.8.0_251\\lib\\security\\cacert;trustStorePassword=changeit";
         ResultSet resultSet = null;
         String value = "";
-
-        try (Connection connection = DriverManager.getConnection ( connectionUrl );
-             Statement statement = connection.createStatement ();) {
+        try (
+                Statement statement = con ();) {
 
             // Create and execute a SELECT SQL statement.
             resultSet = statement.executeQuery ( sql );
@@ -104,13 +121,11 @@ public class SQLDatabaseConnection {
     public List<String> getValues(String sql, String db) {
 
 
-        String connectionUrl = "jdbc:sqlserver://arcncd07;databaseName=" + db + ";encrypt=true;integratedSecurity=true;" +
-                "authenticationScheme=nativeAuthentication;trustServerCertificate=true;trustStore= C:\\Program Files\\Java\\jdk1.8.0_251\\lib\\security\\cacert;trustStorePassword=changeit";
         ResultSet resultSet = null;
         List value = new ArrayList<> ();
 
-        try (Connection connection = DriverManager.getConnection ( connectionUrl );
-             Statement statement = connection.createStatement ();) {
+        try (
+                Statement statement = con ();) {
 
             // Create and execute a SELECT SQL statement.
             resultSet = statement.executeQuery ( sql );
@@ -134,22 +149,18 @@ public class SQLDatabaseConnection {
         return value;
     }
 
-    public int update(String sql, String db) {
+    public int update(String sql, String db) throws SQLException {
 
+        try (
+                Statement statement = con ( "arcncd07", db );) {
 
-        String connectionUrl = "jdbc:sqlserver://arcncd07;databaseName=" + db + ";encrypt=true;integratedSecurity=true;authenticationScheme=nativeAuthentication;trustServerCertificate=true;trustStore= C:\\Program Files\\Java\\jdk1.8.0_251\\lib\\security\\cacert;trustStorePassword=changeit";
-        int result = 0;
-        try (Connection connection = DriverManager.getConnection ( connectionUrl );
-             Statement statement = connection.createStatement ();) {
-            result = statement.executeUpdate ( sql );
+            int result = statement.executeUpdate ( sql );
 
-        } catch (SQLException e) {
-            e.printStackTrace ();
+            return result;
         }
-        return result;
     }
 
-    public void CambiarUsuario(String usuario) {
+    public void CambiarUsuario(String usuario) throws SQLException {
 
         Credenciales credenciales = new Credenciales ();
         String db = "BPN_WEB_QA";
@@ -166,15 +177,14 @@ public class SQLDatabaseConnection {
     public boolean hasColumn(String tabla, String columnName) throws SQLException {
 
 
-        String connectionUrl = "jdbc:sqlserver://arcncd07;databaseName=BPN_WEB_QA;encrypt=true;integratedSecurity=true;authenticationScheme=nativeAuthentication;trustServerCertificate=true;trustStore= C:\\Program Files\\Java\\jdk1.8.0_251\\lib\\security\\cacert;trustStorePassword=changeit";
         ResultSet resultSet = null;
 
-        Connection connection = DriverManager.getConnection ( connectionUrl );
-        Statement statement = connection.createStatement ();
+        try (
+                Statement statement = con ();) {
 
-        // Create and execute a SELECT SQL statement.
-        resultSet = statement.executeQuery ( "select top 1 * from " + tabla );
-
+            // Create and execute a SELECT SQL statement.
+            resultSet = statement.executeQuery ( "select top 1 * from " + tabla );
+        }
         ResultSetMetaData rsmd = resultSet.getMetaData ();
         int columns = rsmd.getColumnCount ();
 

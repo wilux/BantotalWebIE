@@ -2,7 +2,6 @@ package TestCase.E2E;
 
 import Config.Acciones;
 import Config.BaseTest;
-import Tools.Restart;
 import Tools.SQLDatabaseConnection;
 import Tools.logs.Log;
 import com.google.common.base.Stopwatch;
@@ -27,7 +26,7 @@ public class WF_HastaReutilizacionTest extends BaseTest {
 
 
     @BeforeTest
-    public void IniciarSimulacion() throws InterruptedException, AWTException {
+    public void IniciarSimulacion() throws InterruptedException, AWTException, SQLException {
 
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -142,7 +141,7 @@ public class WF_HastaReutilizacionTest extends BaseTest {
     }
 
     @Test(priority = 4, enabled = true)
-    public void CargaAvanzada() throws InterruptedException, ParseException {
+    public void CargaAvanzada() throws InterruptedException, ParseException, SQLException {
 
         Log.reportLog ( "Step 5 - Confirmar Carga Avanzada" );
 

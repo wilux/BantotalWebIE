@@ -8,7 +8,6 @@ import Tools.SQLDatabaseConnection;
 import Tools.logs.Log;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.awt.*;
@@ -18,7 +17,7 @@ import java.sql.SQLException;
 public class WF_RefinanciacionTest extends BaseTest {
 
     //Datos del caso
-//    String cuil = "27059733813";
+    String cuil = "27333930116";
     String NroEntrevista = "";
     String usuarioPlataforma = "SERPILLOE";
     String usuarioRecupero = "ROJASM";
@@ -26,7 +25,7 @@ public class WF_RefinanciacionTest extends BaseTest {
 
 
     @BeforeTest
-    public void login() throws InterruptedException, AWTException {
+    public void login() throws InterruptedException, AWTException, SQLException {
         Log.reportLog ( "Step 0 - Abrimos BT y logueamos" );
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -43,18 +42,10 @@ public class WF_RefinanciacionTest extends BaseTest {
     }
 
 
-    @DataProvider(name = "data-provider")
-    public Object[][] dpMethod() {
-        return new Object[][]{{"27333930116"}, {"20218926364"}, {"27346671454"}};
-    }
-
-
-    @Test(dataProvider = "data-provider")
+    @Test
     public void entrevista(String cuil) throws InterruptedException, AWTException, SQLException {
         Log.reportLog ( "Step 1 - Abrimos Bandeja Tareas e Iniciamos Entrevista" );
         Acciones acciones = new Acciones ( driver );
-        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
-
 
         //Menu Ejecutar
         acciones.menu ().Ejecutar ();

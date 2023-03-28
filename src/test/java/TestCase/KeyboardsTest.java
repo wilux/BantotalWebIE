@@ -2,19 +2,19 @@ package TestCase;
 
 import Config.Acciones;
 import Config.BaseTest;
-import Task.*;
+import Task.Login;
 import Tools.SQLDatabaseConnection;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.awt.*;
+import java.sql.SQLException;
 
 
 public class KeyboardsTest extends BaseTest {
 
 
     @Test
-    public void Completar() throws InterruptedException, AWTException {
+    public void Completar() throws InterruptedException, AWTException, SQLException {
 
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         //Inicio Como usuario de Plataforma

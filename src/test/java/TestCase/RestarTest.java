@@ -2,18 +2,14 @@ package TestCase;
 
 import Config.Acciones;
 import Config.BaseTest;
-import Task.Login;
 import Tools.Restart;
 import Tools.SQLDatabaseConnection;
 import Tools.logs.Log;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.awt.*;
-import java.lang.reflect.Method;
-
-import static Tools.extentreports.ExtentTestManager.startTest;
+import java.sql.SQLException;
 
 
 public class RestarTest extends BaseTest {
@@ -25,7 +21,7 @@ public class RestarTest extends BaseTest {
 
     @Test(priority = 0, description = "Prueba de Login y reLogin")
     //Tests relogin
-    public void ReLogin() throws InterruptedException, AWTException {
+    public void ReLogin() throws InterruptedException, AWTException, SQLException {
 
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -46,7 +42,7 @@ public class RestarTest extends BaseTest {
 
     @Test(priority = 1, description = "Prueba de Login y reLogin1")
     //Tests relogin
-    public void ReLogin1() throws InterruptedException, AWTException {
+    public void ReLogin1() throws InterruptedException, AWTException, SQLException {
         Restart restart = new Restart ( driver );
         driver = restart.As ( usuarioGerencia );
         System.out.println ( "Driver usuarioGerencia " + driver.toString () );
@@ -61,7 +57,7 @@ public class RestarTest extends BaseTest {
     }
 
     @Test(priority = 3, description = "Prueba de Login y reLogin2")
-    public void ReLogin2() throws InterruptedException, AWTException {
+    public void ReLogin2() throws InterruptedException, AWTException, SQLException {
         //Tests relogin
         Restart restart = new Restart ( driver );
         driver = restart.As ( usuarioCreditos );

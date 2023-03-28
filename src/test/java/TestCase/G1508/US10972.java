@@ -18,7 +18,7 @@ public class US10972 extends BaseTest {
 
 
     // @Test(priority = 0, description = "Prueba de existencia de nuevas columna JBNYC5TCA en jbnyc5")
-    public void Inicio(Method method) throws InterruptedException, AWTException {
+    public void Inicio(Method method) throws InterruptedException, AWTException, SQLException {
 
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
         //Inicio Como usuario de Plataforma

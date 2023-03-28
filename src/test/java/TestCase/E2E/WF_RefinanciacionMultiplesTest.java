@@ -26,7 +26,7 @@ public class WF_RefinanciacionMultiplesTest extends BaseTest {
 
 
     @BeforeTest
-    public void login() throws InterruptedException, AWTException {
+    public void login() throws InterruptedException, AWTException, SQLException {
         Log.reportLog ( "Step 0 - Abrimos BT y logueamos" );
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();

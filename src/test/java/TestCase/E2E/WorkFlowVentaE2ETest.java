@@ -30,7 +30,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
 
 
     @BeforeTest
-    public void IniciarSimulacion() throws InterruptedException, AWTException {
+    public void IniciarSimulacion() throws InterruptedException, AWTException, SQLException {
 
         //Instanciamos clases que usaremos
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();
@@ -145,7 +145,7 @@ public class WorkFlowVentaE2ETest extends BaseTest {
     }
 
     @Test(priority = 4, enabled = true, dependsOnMethods = "ConfirmarSimulacion")
-    public void CargaAvanzada() throws InterruptedException, ParseException {
+    public void CargaAvanzada() throws InterruptedException, ParseException, SQLException {
 
         Log.reportLog ( "Step 5 - Confirmar Carga Avanzada" );
 
