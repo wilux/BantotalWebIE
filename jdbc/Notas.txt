@@ -1,8 +1,14 @@
+-- Plan A
+
+Descargar driver de SQL
+https://learn.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server?view=sql-server-ver15
+
+Extraer y copiar desde \enu\auth la dll mssql-jdbc_auth-x.x.x.x.dll en/hacia bin de la version java que se este usando
+
+
+
+
+-- Plan B
 https://techcommunity.microsoft.com/t5/azure-database-support-blog/pkix-path-building-failed-unable-to-find-valid-certification/ba-p/2591304
 
-
-C:\Program Files\Java\jdk1.8.0_251
-
 keytool -importcert -trustcacerts -alias TLS1 -file "C:\Users\floresnes\Documents\Microsoft RSA TLS CA 01.crt" -keystore "C:\Program Files\Java\jdk1.8.0_251\lib\security\cacerts"
-
-keytool -importcert -trustcacerts -alias TLS2 -file "C:\Users\floresnes\Documents\Microsoft RSA TLS CA 02.crt" -keystore "C:\Program Files\Java\jdk1.8.0_251\lib\security\cacerts"
