@@ -49,13 +49,13 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.8.1</version>
+            <version>4.10.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>12.2.0.jre8</version>
+            <version>12.2.0.jre11</version>
         </dependency>
         <dependency>
             <groupId>jtds</groupId>
@@ -76,12 +76,7 @@
             <version>3.0.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>12.2.0.jre11</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
+
 
 
     </dependencies>
