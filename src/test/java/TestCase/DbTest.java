@@ -12,14 +12,12 @@ import java.util.concurrent.TimeUnit;
 public class DbTest {
 
 
-//    @Test
-//    //Tests google calculator
-//    public void Conection() throws InterruptedException {
-//
-//        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
-//        bd.CambiarUsuario ( "BOUZASC" );
-//
-//    }
+    @Test public void Conection() throws InterruptedException, SQLException {
+
+        SQLDatabaseConnection bd = new SQLDatabaseConnection ();
+        bd.CambiarUsuario ( "BOUZASC" );
+
+    }
 
 
 //    @Test

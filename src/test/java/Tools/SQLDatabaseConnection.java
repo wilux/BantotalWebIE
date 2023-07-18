@@ -16,12 +16,21 @@ import java.util.Locale;
 
 public class SQLDatabaseConnection {
 
+    public String connectionUrl(String server, String db){
+        return "jdbc:sqlserver://" + server + ";databaseName=" + db + ";encrypt=true;" +
+                "integratedSecurity=true;" +
+                "authenticationScheme=nativeAuthentication;trustServerCertificate=true;";
+    }
+
+    public String connectionUrl(){
+        return "jdbc:sqlserver://arcncd07;databaseName=BPN_WEB_QA;encrypt=true;" +
+                "integratedSecurity=true;" +
+                "authenticationScheme=nativeAuthentication;trustServerCertificate=true;";
+    }
 
     public Statement con(String server, String db) throws SQLException {
 
-        String connectionUrl = "jdbc:sqlserver://" + server + ";databaseName=" + db + ";encrypt=true;" +
-                "integratedSecurity=true;" +
-                "authenticationScheme=nativeAuthentication;trustServerCertificate=true;";
+        String connectionUrl = connectionUrl(server, db);
 
         Connection connection = DriverManager.getConnection ( connectionUrl );
         return connection.createStatement ();
@@ -30,9 +39,7 @@ public class SQLDatabaseConnection {
 
     public Statement con() throws SQLException {
 
-        String connectionUrl = "jdbc:sqlserver://arcncd07;databaseName=BPN_WEB_QA;encrypt=true;" +
-                "integratedSecurity=true;" +
-                "authenticationScheme=nativeAuthentication;trustServerCertificate=true;";
+        String connectionUrl = connectionUrl();
 
         Connection connection = DriverManager.getConnection ( connectionUrl );
         return connection.createStatement ();
@@ -167,9 +174,6 @@ public class SQLDatabaseConnection {
         String sql = "UPDATE J055XZ SET J055XZUsr='" + usuario + "'" + " WHERE J055XZUad='" + credenciales.username + "'";
         if ( update ( sql, db ) < 0 ) {
             System.out.println ( "Cambio no efectuado" );
-        }
-        else {
-//            System.out.println ( "Cambio realizado" );
         }
     }
 
