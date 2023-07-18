@@ -48,7 +48,7 @@ public class WF_HastaReutilizacionTest extends BaseTest {
 
     @Test(priority = 0, enabled = true)
     //@Test(priority = 0)
-    public void Bandeja() throws InterruptedException {
+    public void Bandeja() throws InterruptedException, AWTException {
 
         Acciones acciones = new Acciones ( driver );
 
@@ -81,7 +81,7 @@ public class WF_HastaReutilizacionTest extends BaseTest {
     }
 
     @Test(priority = 1, enabled = true)
-    public void Simulacion() throws InterruptedException {
+    public void Simulacion() throws InterruptedException, AWTException {
 
 
         Acciones acciones = new Acciones ( driver );

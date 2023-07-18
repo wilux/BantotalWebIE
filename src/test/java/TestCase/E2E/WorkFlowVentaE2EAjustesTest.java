@@ -47,7 +47,7 @@ public class WorkFlowVentaE2EAjustesTest extends BaseTest {
 
     @Test(priority = 0, enabled = true)
     //@Test(priority = 0)
-    public void Bandeja() throws InterruptedException {
+    public void Bandeja() throws InterruptedException, AWTException {
         Acciones acciones = new Acciones ( driver );
 
         //Abrir Entrevista Nueva
@@ -81,7 +81,7 @@ public class WorkFlowVentaE2EAjustesTest extends BaseTest {
     }
 
     @Test(priority = 1, enabled = true, dependsOnMethods = "Bandeja")
-    public void Simulacion() throws InterruptedException {
+    public void Simulacion() throws InterruptedException, AWTException {
 
 
         Acciones acciones = new Acciones ( driver );

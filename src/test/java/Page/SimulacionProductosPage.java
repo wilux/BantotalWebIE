@@ -25,6 +25,8 @@ public class SimulacionProductosPage {
     public By checkAcuerdo = By.name ( "_ACTUALIZAACC" );
 
     //Prestamo
+    public By ValorMontoAprox = By.name ( "  _MONTOAPROX" );
+    public By BTNOPPRESTAMOS = By.id("BTNOPPRESTAMOS");
     public By InputMontoSolicitado = By.name ( "_BNQFPC5MTO" );
     public By InputPlazo = By.name ( "_BNQFPC5PZO" );
     public By SelectDestinoFondos = By.name ( "_BNQFPC5DES" );
@@ -35,6 +37,18 @@ public class SimulacionProductosPage {
     public By BTN_NO = By.id ( "BTNCANCELCONFIRMATION" );
     // public By BTNCONFIRMATION = By.id("BTNCONFIRMATION");
     public By ValorCuotaAprox = By.name ( "_BNQFPC5CUO" );
+
+    public By Span_CuotaAprox = By.id ( "span__BNQFPC5CUO" );
+    public By Span_MontoAprox = By.id ( "span__MONTOAPROX" );
+
+    public By Span_TasaSeguro = By.id ( "span__TASAEN0" );
+
+    public By Span_ComisLiq = By.id ( "span__BNQFPC5CLI" );
+    public By Span_ComisAdmMensual = By.id ( "span__BNQFPC5CAM" );
+    public By Span_Impuestos = By.id ( "span__MONTOSELLO" );
+    public By Span_IvaIntereses= By.id ( "span__BNQFPC5IVI" );
+    public By Span_IvaComision = By.id ( "span__BNQFPC5IVC" );
+    public By Span_Operacion = By.id ( "span__BNQFPC5OPE" );
     public By Span_Tna = By.id ( "span__BNQFPC5TNA" );
     public By input_Tna = By.id ( "_BNQFPC5TNA" );
     public By Span_Tem = By.name ( "span__BNQFPC5TEM" );

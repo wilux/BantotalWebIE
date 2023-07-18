@@ -15,7 +15,6 @@ public class EntrevistaTest extends BaseTest {
 
 
     @Test
-    //Tests google calculator
     public void Completar() throws InterruptedException, AWTException, SQLException {
 
         SQLDatabaseConnection bd = new SQLDatabaseConnection ();

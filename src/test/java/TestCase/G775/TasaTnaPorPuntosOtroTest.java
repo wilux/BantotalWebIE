@@ -44,7 +44,7 @@ public class TasaTnaPorPuntosOtroTest extends BaseTest {
 
 
     @Test(priority = 0)
-    public void TestConPaqueteCambios() throws InterruptedException {
+    public void TestConPaqueteCambios() throws InterruptedException, AWTException {
 
 
         //Instanciamos clases que usaremos

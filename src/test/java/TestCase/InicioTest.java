@@ -10,7 +10,6 @@ public class InicioTest extends BaseTest {
 
 
     @Test(priority = 0, description = "Prueba de Login correcto")
-    //Tests google calculator
     public void Login(Method method) throws InterruptedException {
 
 

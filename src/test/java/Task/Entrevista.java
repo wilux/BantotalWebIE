@@ -8,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.awt.*;
+
 public class Entrevista {
     WebDriver driver;
 
@@ -19,7 +21,7 @@ public class Entrevista {
 
     }
 
-    public void CompletarGenerico() throws InterruptedException {
+    public void CompletarGenerico() throws InterruptedException, AWTException {
         // Modalidad ( "Presencial" );
         // ActividadLaboral ();
         // DatosDelNegocio ();
@@ -76,7 +78,7 @@ public class Entrevista {
 
     }
 
-    public void Modalidad(String modalidad) {
+    public void Modalidad(String modalidad) throws AWTException {
         System.out.println ( "Completando Modalidad " + modalidad );
         EntrevistaPage entrevistaPage = new EntrevistaPage ( driver );
 
@@ -195,7 +197,7 @@ public class Entrevista {
         }
     }
 
-    public void DatosContacto() throws InterruptedException {
+    public void DatosContacto() throws InterruptedException, AWTException {
         EntrevistaPage entrevistaPage = new EntrevistaPage ( driver );
         Choose choose = new Choose ( driver );
         Get get = new Get ( driver );
@@ -231,7 +233,7 @@ public class Entrevista {
 
     }
 
-    public void Domicilio() throws InterruptedException {
+    public void Domicilio() throws InterruptedException, AWTException {
         EntrevistaPage entrevistaPage = new EntrevistaPage ( driver );
         Choose choose = new Choose ( driver );
         Get get = new Get ( driver );

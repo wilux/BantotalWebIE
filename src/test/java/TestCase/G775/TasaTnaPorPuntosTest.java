@@ -44,7 +44,7 @@ public class TasaTnaPorPuntosTest extends BaseTest {
 
 
     @Test(priority = 0)
-    public void TestSinPaqueteExistenteLlevaSinPaquete() throws InterruptedException {
+    public void TestSinPaqueteExistenteLlevaSinPaquete() throws InterruptedException, AWTException {
 
 
         //Instanciamos clases que usaremos
@@ -77,7 +77,7 @@ public class TasaTnaPorPuntosTest extends BaseTest {
     }
 
     @Test(priority = 1)
-    public void TestSinPaqueteLlevaPaqConPtosParticulares() throws InterruptedException {
+    public void TestSinPaqueteLlevaPaqConPtosParticulares() throws InterruptedException, AWTException {
 
         Thread.sleep ( 3000 );
         //Instanciamos clases que usaremos
@@ -111,7 +111,7 @@ public class TasaTnaPorPuntosTest extends BaseTest {
     }
 
     @Test(priority = 2)
-    public void TestSinPaqueteLlevaPaqConPuntosGralesSinPtoParticulares() throws InterruptedException {
+    public void TestSinPaqueteLlevaPaqConPuntosGralesSinPtoParticulares() throws InterruptedException, AWTException {
 
         Thread.sleep ( 3000 );
         //Instanciamos clases que usaremos
