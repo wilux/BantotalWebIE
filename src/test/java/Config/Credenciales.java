@@ -1,7 +1,7 @@
 package Config;
 
 public class Credenciales {
-    public String username = "floresnes";
-    public String password = "Carme2023-";
+    public String username = "";
+    public String password = "";
 
 }
